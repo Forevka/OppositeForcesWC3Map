@@ -1,0 +1,697 @@
+gg_trg_Melee_Initialization = nil
+function InitGlobals()
+end
+
+
+--[[
+TasButtonList7a by Tasyen
+
+function CreateTasButtonList(buttonCount, parent, buttonAction, updateAction, searchAction, filterAction)
+ create a new List
+ parent is the container of this Frame it will attach itself to its TOP.
+ buttonAction is the function that executes when an option is clicked. args: (clickedData, buttonListObject, dataIndex)
+ when your data are unit-RawCodes then you can skip updateAction & searchAction.
+ updateAction runs for each Button and is used to set the diplayed content. args:(frameObject, data)
+    frameObject.Button
+    frameObject.ToolTipFrame
+    frameObject.ToolTipFrameIcon
+    frameObject.ToolTipFrameName
+    frameObject.ToolTipFrameSeperator
+    frameObject.ToolTipFrameText
+
+    frameObject.Icon
+    frameObject.Text
+    frameObject.IconGold
+    frameObject.TextGold
+    frameObject.IconLumber
+    frameObject.TextLumber
+    TasButtonList[frameObject] => buttonListObject
+
+    data is one entry of the TasButtonLists Data-Array.
+
+ searchAction is a function that returns true if the current data matches the searchText. Args: (data, searchedText, buttonListObject)
+ filterAction is meant to be used when one wants an addtional non text based filtering, with returning true allowing data or false rejecting it. Args: (data, buttonListObject, isTextSearching)
+ searchAction , udateAction & filterAction are async this functions should not do anything that alters the game state/flow.
+
+function CreateTasButtonListV2(rowCount, parent, buttonAction, updateAction, searchAction, filterAction)
+    2 Buttons each Row, takes more Height then the other Versions
+function CreateTasButtonListV3(rowCount, parent, buttonAction, updateAction, searchAction, filterAction)
+    3 Buttons each Row, only Icon, and Costs
+
+function TasButtonListClearData(buttonListObject)
+    remove all data
+function TasButtonListRemoveData(buttonListObject, data)
+    search for data and remove it
+function TasButtonListAddData(buttonListObject, data)
+    add data for one Button
+function TasButtonListCopyData(writeObject, readObject)
+    writeObject uses the same data as readObject and calls UpdateButtonList.
+function UpdateTasButtonList(buttonListObject)
+    update the displayed Content should be done after Data was added or removed was used.
+TasButtonListSearch(buttonListObject[, text])
+    The buttonList will search it's data for the given text, if nil is given as text it will search for what the user currently has in its box.
+    This will also update the buttonList
+--]]
+
+BlzLoadTOCFile("war3mapimported\\TasButtonList.toc")
+TasButtonList = {}
+
+TasButtonList.SyncTrigger = CreateTrigger()
+TasButtonList.SyncTriggerAction = TriggerAddAction(TasButtonList.SyncTrigger, function()
+    xpcall(function()
+    local buttonListObject = TasButtonList[BlzGetTriggerFrame()]
+    local dataIndex = math.tointeger(BlzGetTriggerFrameValue())
+
+    if buttonListObject.ButtonAction then
+        -- call the wanted action, 1 the current Data
+        buttonListObject.ButtonAction(buttonListObject.Data[dataIndex], buttonListObject, dataIndex)
+    end
+    UpdateTasButtonList(buttonListObject)
+    end,print)
+end)
+
+-- handles the clicking
+TasButtonList.ButtonTrigger = CreateTrigger()
+TasButtonList.ButtonTriggerAction = TriggerAddAction(TasButtonList.ButtonTrigger, function()
+    local buttonIndex = TasButtonList[BlzGetTriggerFrame()].Index
+    local buttonListObject = TasButtonList[TasButtonList[BlzGetTriggerFrame()]]
+    local dataIndex = buttonListObject.DataFiltered[buttonListObject.ViewPoint + buttonIndex]
+    BlzFrameSetEnable(BlzGetTriggerFrame(), false)
+    BlzFrameSetEnable(BlzGetTriggerFrame(), true)
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        BlzFrameSetValue(buttonListObject.SyncFrame, dataIndex)
+    end
+end)
+
+TasButtonList.SearchTrigger = CreateTrigger()
+TasButtonList.SearchTriggerAction = TriggerAddAction(TasButtonList.SearchTrigger, function()
+    TasButtonListSearch(TasButtonList[BlzGetTriggerFrame()], BlzFrameGetText(BlzGetTriggerFrame()))
+end)
+
+-- scrolling while pointing on Buttons
+TasButtonList.ButtonScrollTrigger = CreateTrigger()
+TasButtonList.ButtonScrollTriggerAction = TriggerAddAction(TasButtonList.ButtonScrollTrigger, function()
+    local buttonListObject = TasButtonList[TasButtonList[BlzGetTriggerFrame()]]
+    local frame = buttonListObject.Slider
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        if BlzGetTriggerFrameValue() > 0 then
+            BlzFrameSetValue(frame, BlzFrameGetValue(frame) + buttonListObject.SliderStep)
+        else
+            BlzFrameSetValue(frame, BlzFrameGetValue(frame) - buttonListObject.SliderStep)
+        end
+    end
+end)
+
+-- scrolling while pointing on slider aswell as calling
+TasButtonList.SliderTrigger = CreateTrigger()
+TasButtonList.SliderTriggerAction = TriggerAddAction(TasButtonList.SliderTrigger, function()
+    local buttonListObject = TasButtonList[BlzGetTriggerFrame()]
+    local frame = BlzGetTriggerFrame()
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        if BlzGetTriggerFrameEvent() == FRAMEEVENT_MOUSE_WHEEL then
+            if BlzGetTriggerFrameValue() > 0 then
+                BlzFrameSetValue(frame, BlzFrameGetValue(frame) + buttonListObject.SliderStep)
+            else
+                BlzFrameSetValue(frame, BlzFrameGetValue(frame) - buttonListObject.SliderStep)
+            end
+        else
+            -- when there is enough data use viewPoint. the Viewpoint is reduced from the data to make top being top.
+            if #buttonListObject.DataFiltered > #buttonListObject.Frames then
+                buttonListObject.ViewPoint = #buttonListObject.DataFiltered - math.tointeger(BlzGetTriggerFrameValue())
+            else
+                buttonListObject.ViewPoint = 0
+            end
+            UpdateTasButtonList(buttonListObject)
+        end
+    end
+end)
+
+--runs once for each button shown
+function UpdateTasButtonListDefaultObject(frameObject, data)
+    BlzFrameSetTexture(frameObject.Icon, BlzGetAbilityIcon(data), 0, false)
+    BlzFrameSetText(frameObject.Text, GetObjectName(data))
+
+    BlzFrameSetTexture(frameObject.ToolTipFrameIcon, BlzGetAbilityIcon(data), 0, false)
+    BlzFrameSetText(frameObject.ToolTipFrameName, GetObjectName(data))      
+--        frameObject.ToolTipFrameSeperator
+    BlzFrameSetText(frameObject.ToolTipFrameText, BlzGetAbilityExtendedTooltip(data, 0))
+
+    if not IsUnitIdType(data, UNIT_TYPE_HERO) then
+        local lumber = GetUnitWoodCost(data)
+        local gold = GetUnitGoldCost(data)
+        if GetPlayerState(GetLocalPlayer(), PLAYER_STATE_RESOURCE_GOLD) >= gold then
+            BlzFrameSetText(frameObject.TextGold, GetUnitGoldCost(data))
+        else
+            BlzFrameSetText(frameObject.TextGold, "|cffff2010"..GetUnitGoldCost(data))
+        end    
+        
+        if GetPlayerState(GetLocalPlayer(), PLAYER_STATE_RESOURCE_LUMBER) >= lumber then
+            BlzFrameSetText(frameObject.TextLumber, GetUnitWoodCost(data))
+        else
+            BlzFrameSetText(frameObject.TextLumber, "|cffff2010"..GetUnitWoodCost(data))
+        end
+    else
+        BlzFrameSetText(frameObject.TextLumber, 0)
+        BlzFrameSetText(frameObject.TextGold, 0)
+    end
+end
+
+function SearchTasButtonListDefaultObject(data, searchedText, buttonListObject)
+    --return BlzGetAbilityTooltip(data, 0)
+    --return GetObjectName(data, 0)
+    return string.find(GetObjectName(data), searchedText)
+end
+
+-- update the shown content
+function UpdateTasButtonList(buttonListObject)
+    xpcall(function()
+    local data = buttonListObject.Data
+    BlzFrameSetVisible(buttonListObject.Slider, #buttonListObject.DataFiltered > #buttonListObject.Frames)
+    for int = 1, #buttonListObject.Frames do
+        local frameObject = buttonListObject.Frames[int]
+        if #buttonListObject.DataFiltered >= int  then
+            buttonListObject.UpdateAction(frameObject, data[buttonListObject.DataFiltered[int + buttonListObject.ViewPoint]])
+            BlzFrameSetVisible(frameObject.Button, true)
+        else
+            BlzFrameSetVisible(frameObject.Button, false)
+        end
+    end
+end, print)
+end
+
+function InitTasButtonListObject(parent, buttonAction, updateAction, searchAction, filterAction)
+    local object = {
+        Data = {}, --an array each slot is the user data
+        DataFiltered = {}, -- indexes of Data fitting the current search
+        ViewPoint = 0,
+        Frames = {},
+        Parent = parent
+    }
+    object.ButtonAction = buttonAction --call this inside the SyncAction after a button is clicked
+    object.UpdateAction = updateAction --function defining how to display stuff (async)
+    object.SearchAction = searchAction --function to return the searched Text (async)
+    object.FilterAction = filterAction --
+    if not updateAction then object.UpdateAction = UpdateTasButtonListDefaultObject end
+    if not searchAction then object.SearchAction = SearchTasButtonListDefaultObject end
+    table.insert(TasButtonList, object) --index to TasButtonList
+    TasButtonList[object] = #TasButtonList -- TasButtonList to Index
+
+    object.SyncFrame = BlzCreateFrameByType("SLIDER", "", parent, "", 0)
+    BlzFrameSetMinMaxValue(object.SyncFrame, 0, 9999999)
+    BlzFrameSetStepSize(object.SyncFrame, 1.0)
+    BlzTriggerRegisterFrameEvent(TasButtonList.SyncTrigger, object.SyncFrame, FRAMEEVENT_SLIDER_VALUE_CHANGED)
+    BlzFrameSetVisible(object.SyncFrame, false)
+    TasButtonList[object.SyncFrame] = object
+
+    object.InputFrame = BlzCreateFrame("TasEditBox", parent, 0, 0)
+    BlzTriggerRegisterFrameEvent(TasButtonList.SearchTrigger, object.InputFrame, FRAMEEVENT_EDITBOX_TEXT_CHANGED)
+    BlzFrameSetPoint(object.InputFrame, FRAMEPOINT_TOPRIGHT, parent, FRAMEPOINT_TOPRIGHT, 0, 0)
+    TasButtonList[object.InputFrame] = object
+
+    return object
+end
+
+function InitTasButtonListSlider(object, stepSize, rowCount)
+    object.Slider = BlzCreateFrameByType("SLIDER", "FrameListSlider", object.Parent, "QuestMainListScrollBar", 0)
+    TasButtonList[object.Slider] = object -- the slider nows the TasButtonListobject
+    object.SliderStep = stepSize
+    BlzFrameSetStepSize(object.Slider, stepSize)
+    BlzFrameClearAllPoints(object.Slider)
+    BlzFrameSetVisible(object.Slider, true)
+    BlzFrameSetMinMaxValue(object.Slider, 0, 0)
+    BlzFrameSetPoint(object.Slider, FRAMEPOINT_TOPLEFT, object.Frames[1].Button, FRAMEPOINT_TOPRIGHT, 0, 0)
+    BlzFrameSetSize(object.Slider, 0.012, BlzFrameGetHeight(object.Frames[1].Button) * rowCount)
+    BlzTriggerRegisterFrameEvent(TasButtonList.SliderTrigger, object.Slider , FRAMEEVENT_SLIDER_VALUE_CHANGED)
+    BlzTriggerRegisterFrameEvent(TasButtonList.SliderTrigger, object.Slider , FRAMEEVENT_MOUSE_WHEEL)
+end
+
+function CreateTasButtonList(buttonCount, parent, buttonAction, updateAction, searchAction, filterAction)
+    local object = InitTasButtonListObject(parent, buttonAction, updateAction, searchAction, filterAction)  
+
+    for int = 1, buttonCount do
+        local frameObject = {}
+        frameObject.Index = int
+        frameObject.Button = BlzCreateFrame("TasButton", parent, 0, 0)
+        frameObject.ToolTipFrame = BlzCreateFrame("TasButtonListTooltipBox", frameObject.Button, 0, 0)
+        frameObject.ToolTipFrameIcon = BlzGetFrameByName("TasButtonListTooltipIcon", 0)
+        frameObject.ToolTipFrameName = BlzGetFrameByName("TasButtonListTooltipName", 0)
+        frameObject.ToolTipFrameSeperator = BlzGetFrameByName("TasButtonListTooltipSeperator", 0)
+        frameObject.ToolTipFrameText = BlzGetFrameByName("TasButtonListTooltipText", 0)    
+        BlzFrameSetPoint(frameObject.ToolTipFrame, FRAMEPOINT_TOPRIGHT, parent, FRAMEPOINT_TOPLEFT, -0.001, 0)
+        BlzFrameSetTooltip(frameObject.Button, frameObject.ToolTipFrame)
+
+        frameObject.Icon = BlzGetFrameByName("TasButtonIcon", 0)
+        frameObject.Text = BlzGetFrameByName("TasButtonText", 0)
+        frameObject.IconGold = BlzGetFrameByName("TasButtonIconGold", 0)
+        frameObject.TextGold = BlzGetFrameByName("TasButtonTextGold", 0)
+        frameObject.IconLumber = BlzGetFrameByName("TasButtonIconLumber", 0)
+        frameObject.TextLumber = BlzGetFrameByName("TasButtonTextLumber", 0)
+        TasButtonList[frameObject.Button] = frameObject
+        TasButtonList[frameObject] = object
+        table.insert(object.Frames, frameObject)
+        BlzTriggerRegisterFrameEvent(TasButtonList.ButtonTrigger, frameObject.Button, FRAMEEVENT_CONTROL_CLICK)
+        BlzTriggerRegisterFrameEvent(TasButtonList.ButtonScrollTrigger, frameObject.Button, FRAMEEVENT_MOUSE_WHEEL)
+        if int > 1 then 
+           BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_TOP, object.Frames[int - 1].Button, FRAMEPOINT_BOTTOM, 0, -0)
+        else
+            BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_TOPRIGHT, object.InputFrame, FRAMEPOINT_BOTTOMRIGHT, 0, 0)
+        end
+    end
+    InitTasButtonListSlider(object, 1, buttonCount)
+
+    return object
+end
+
+function CreateTasButtonListV2(rowCount, parent, buttonAction, updateAction, searchAction, filterAction)
+    local buttonCount = rowCount*2
+    local object = InitTasButtonListObject(parent, buttonAction, updateAction, searchAction, filterAction)
+
+    local rowEnd = false
+    for int = 1, buttonCount do
+        local frameObject = {}
+        frameObject.Index = int
+        frameObject.Button = BlzCreateFrame("TasButtonSmall", parent, 0, 0)
+        frameObject.ToolTipFrame = BlzCreateFrame("TasButtonListTooltipBox", frameObject.Button, 0, 0)
+        frameObject.ToolTipFrameIcon = BlzGetFrameByName("TasButtonListTooltipIcon", 0)
+        frameObject.ToolTipFrameName = BlzGetFrameByName("TasButtonListTooltipName", 0)
+        frameObject.ToolTipFrameSeperator = BlzGetFrameByName("TasButtonListTooltipSeperator", 0)
+        frameObject.ToolTipFrameText = BlzGetFrameByName("TasButtonListTooltipText", 0)    
+        BlzFrameSetPoint(frameObject.ToolTipFrame, FRAMEPOINT_TOPRIGHT, parent, FRAMEPOINT_TOPLEFT, -0.001, 0)
+        BlzFrameSetTooltip(frameObject.Button, frameObject.ToolTipFrame)
+
+        frameObject.Icon = BlzGetFrameByName("TasButtonSmallIcon", 0)
+        frameObject.Text = BlzGetFrameByName("TasButtonSmallText", 0)
+        frameObject.IconGold = BlzGetFrameByName("TasButtonSmallIconGold", 0)
+        frameObject.TextGold = BlzGetFrameByName("TasButtonSmallTextGold", 0)
+        frameObject.IconLumber = BlzGetFrameByName("TasButtonSmallIconLumber", 0)
+        frameObject.TextLumber = BlzGetFrameByName("TasButtonSmallTextLumber", 0)
+        TasButtonList[frameObject.Button] = frameObject
+        TasButtonList[frameObject] = object
+        table.insert(object.Frames, frameObject)
+        BlzTriggerRegisterFrameEvent(TasButtonList.ButtonTrigger, frameObject.Button, FRAMEEVENT_CONTROL_CLICK)
+        BlzTriggerRegisterFrameEvent(TasButtonList.ButtonScrollTrigger, frameObject.Button, FRAMEEVENT_MOUSE_WHEEL)
+        rowEnd = not rowEnd
+        if int > 1 then 
+            if rowEnd then
+                BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_TOP, object.Frames[int - 2].Button, FRAMEPOINT_BOTTOM, 0, -0)
+            else
+                BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_RIGHT, object.Frames[int - 1].Button, FRAMEPOINT_LEFT, 0, -0)
+            end
+        else
+            BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_TOPRIGHT, object.InputFrame, FRAMEPOINT_BOTTOMRIGHT, 0, 0)            
+        end
+        
+    end
+    InitTasButtonListSlider(object, 2, rowCount)
+
+    return object
+end
+
+function CreateTasButtonListV3(rowCount, parent, buttonAction, updateAction, searchAction, filterAction)
+    local buttonCount = rowCount*3
+    local object = InitTasButtonListObject(parent, buttonAction, updateAction, searchAction, filterAction)
+
+    local rowRemain = 3
+    for int = 1, buttonCount do
+        local frameObject = {}
+        frameObject.Index = int
+        frameObject.Button = BlzCreateFrame("TasButtonGrid", parent, 0, 0)
+        frameObject.ToolTipFrame = BlzCreateFrame("TasButtonListTooltipBox", frameObject.Button, 0, 0)
+        frameObject.ToolTipFrameIcon = BlzGetFrameByName("TasButtonListTooltipIcon", 0)
+        frameObject.ToolTipFrameName = BlzGetFrameByName("TasButtonListTooltipName", 0)
+        frameObject.ToolTipFrameSeperator = BlzGetFrameByName("TasButtonListTooltipSeperator", 0)
+        frameObject.ToolTipFrameText = BlzGetFrameByName("TasButtonListTooltipText", 0)    
+        BlzFrameSetPoint(frameObject.ToolTipFrame, FRAMEPOINT_TOPRIGHT, parent, FRAMEPOINT_TOPLEFT, -0.001, 0)
+        BlzFrameSetTooltip(frameObject.Button, frameObject.ToolTipFrame)
+
+        frameObject.Icon = BlzGetFrameByName("TasButtonGridIcon", 0)
+        frameObject.Text = BlzGetFrameByName("TasButtonGridText", 0)
+        frameObject.IconGold = BlzGetFrameByName("TasButtonGridIconGold", 0)
+        frameObject.TextGold = BlzGetFrameByName("TasButtonGridTextGold", 0)
+        frameObject.IconLumber = BlzGetFrameByName("TasButtonGridIconLumber", 0)
+        frameObject.TextLumber = BlzGetFrameByName("TasButtonGridTextLumber", 0)
+        TasButtonList[frameObject.Button] = frameObject
+        TasButtonList[frameObject] = object
+        table.insert(object.Frames, frameObject)
+        BlzTriggerRegisterFrameEvent(TasButtonList.ButtonTrigger, frameObject.Button, FRAMEEVENT_CONTROL_CLICK)
+        BlzTriggerRegisterFrameEvent(TasButtonList.ButtonScrollTrigger, frameObject.Button, FRAMEEVENT_MOUSE_WHEEL)
+        
+        if int > 1 then 
+            if rowRemain == 0 then
+                BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_TOP, object.Frames[int - 3].Button, FRAMEPOINT_BOTTOM, 0, -0)
+                rowRemain = 3
+            else
+                BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_RIGHT, object.Frames[int - 1].Button, FRAMEPOINT_LEFT, 0, -0)
+            end
+        else
+            BlzFrameSetPoint(frameObject.Button, FRAMEPOINT_TOPRIGHT, object.InputFrame, FRAMEPOINT_BOTTOMRIGHT, 0, 0)            
+        end
+        rowRemain = rowRemain - 1
+    end
+    InitTasButtonListSlider(object, 3, rowCount)
+
+    return object
+end
+
+function TasButtonListAddData(buttonListObject, data)
+    table.insert( buttonListObject.Data, data)
+    table.insert( buttonListObject.DataFiltered, #buttonListObject.Data)
+    --BlzFrameSetMinMaxValue(buttonListObject.Slider, 0, #buttonListObject.Data - (#buttonListObject.Frames + 0))
+    BlzFrameSetMinMaxValue(buttonListObject.Slider, #buttonListObject.Frames, #buttonListObject.Data)
+end
+
+function TasButtonListRemoveData(buttonListObject, data)
+    local found = false
+    for index, value in ipairs(buttonListObject.Data)
+    do
+        if value == data then
+            table.remove(buttonListObject.Data, index)
+            found = true
+            break
+        end
+    end
+    --BlzFrameSetMinMaxValue(buttonListObject.Slider, 0, #buttonListObject.Data - (#buttonListObject.Frames + 0))
+    BlzFrameSetMinMaxValue(buttonListObject.Slider, #buttonListObject.Frames, #buttonListObject.Data)
+end
+
+function TasButtonListClearData(buttonListObject)
+    repeat until not table.remove(buttonListObject.Data)
+    repeat until not table.remove(buttonListObject.DataFiltered)
+    BlzFrameSetMinMaxValue(buttonListObject.Slider, 0, 0)
+end
+
+function TasButtonListCopyData(writeObject, readObject)
+    writeObject.Data = readObject.Data
+    repeat until not table.remove(writeObject.DataFiltered)
+    for index, value in ipairs(readObject.DataFiltered) do table.insert( writeObject.DataFiltered, value) end
+    --BlzFrameSetMinMaxValue(writeObject.Slider, 0, #writeObject.Data - (#writeObject.Frames + 0))
+    BlzFrameSetMinMaxValue(writeObject.Slider, #writeObject.Frames, #writeObject.Data)
+    UpdateTasButtonList(writeObject)
+end
+
+function TasButtonListSearch(buttonListObject, text)
+    if not text then text = BlzFrameGetText(buttonListObject.InputFrame) end
+    local filteredData = buttonListObject.DataFiltered
+    
+    if GetLocalPlayer() == GetTriggerPlayer() then
+        repeat do end until not table.remove(filteredData)
+        if text ~= "" then
+            for index, value in ipairs(buttonListObject.Data)
+            do
+                if buttonListObject.SearchAction(value, text, buttonListObject) and (not buttonListObject.FilterAction or buttonListObject.FilterAction(value, buttonListObject, true)) then
+                    table.insert(filteredData, index)
+                end
+            end
+            
+        else
+            for index, value in ipairs(buttonListObject.Data)
+            do
+                if not buttonListObject.FilterAction or buttonListObject.FilterAction(value, buttonListObject, false) then
+                    table.insert(filteredData, index)
+                end
+            end
+        end
+        --table.sort(filteredData, function(a, b) return GetObjectName(buttonListObject.Data[a]) < GetObjectName(buttonListObject.Data[b]) end  )
+
+        --update Slider, with that also update
+        BlzFrameSetMinMaxValue(buttonListObject.Slider, #buttonListObject.Frames, math.max(#filteredData,0))
+        BlzFrameSetValue(buttonListObject.Slider, 999999)
+        
+    end
+end
+
+TimerT = CreateTimer()
+TimerStart(TimerT, 0.0, false, function()
+    xpcall(function()
+        local timer = GetExpiredTimer()
+        local shopOwner = Player(bj_PLAYER_NEUTRAL_EXTRA)
+        local shop = CreateUnit(shopOwner, FourCC('n003'), -2200, -1000, 0)
+        local shopRect = Rect(0 , 0, 1000, 1000)
+        MoveRectTo(shopRect, GetUnitX(shop), GetUnitY(shop))
+
+        IssueNeutralTargetOrder(shopOwner, shop, "smart", shop)
+        SetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_GOLD, 99999999)
+        SetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_LUMBER, 99999999)   
+    local triggerOrder = CreateTrigger()
+    ItemData = {}
+    ItemData.Test = {}
+    ItemData.Counter = 0
+    TriggerAddAction(triggerOrder, function()
+        xpcall(function()
+        local itemCode = GetIssuedOrderId()
+        --print("Order", GetObjectName(itemCode) )
+        if not ItemData[itemCode] then 
+            ItemData[itemCode] = {
+                Gold = GetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_GOLD),
+                Lumber = GetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_LUMBER)
+            }
+            TimerStart(timer, 0, false, function()
+                
+                xpcall(function()
+                    
+                ItemData.Counter = ItemData.Counter + 1
+                --print("After 0", GetObjectName(itemCode), ItemData.Counter)
+                ItemData[itemCode].Gold = ItemData[itemCode].Gold - GetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_GOLD)
+                ItemData[itemCode].Lumber = ItemData[itemCode].Lumber - GetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_LUMBER)
+                --print(GetObjectName(itemCode), ItemData[itemCode].Gold, ItemData[itemCode].Lumber)
+                UnitRemoveAbility(shop, FourCC("Asid"))
+                UnitAddAbility(shop, FourCC("Asid"))
+                for index, value in ipairs(ItemData.Test)
+                do
+                    if value == itemCode then table.remove(ItemData.Test, index) break end
+                end
+                if #ItemData.Test > 0 then
+                    AddItemToStock(shop, ItemData.Test[1], 1, 1)
+                    SetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_GOLD, 99999999)
+                    SetPlayerState(shopOwner, PLAYER_STATE_RESOURCE_LUMBER, 99999999)   
+                    --print("Next", GetObjectName(ItemData.Test[1]), string.pack(">I4", ItemData.Test[1]))
+                    IssueNeutralImmediateOrderById(shopOwner, shop, ItemData.Test[1])
+                else
+                    --print("out of data", ItemData.Counter)
+                end
+                EnumItemsInRect(shopRect, nil, function()
+                    RemoveItem(GetEnumItem())
+                end)
+            end, print)
+            end)
+        end
+    end, print)
+    end)
+    
+    TriggerRegisterUnitEvent(triggerOrder, shop, EVENT_UNIT_ISSUED_ORDER)
+    
+
+    print("done")
+    function ItemGetCost(itemCode)
+        if not ItemData[itemCode] then
+            table.insert( ItemData.Test, itemCode)
+            if #ItemData.Test == 1 then
+                print("start new")
+                AddItemToStock(shop, itemCode, 1, 1)
+                IssueNeutralTargetOrder(shopOwner, shop, "smart", shop2)
+                IssueNeutralImmediateOrderById(shopOwner, shop, itemCode)
+                --IssueNeutralTargetOrderById(shopOwner, shop, itemCode, shop)
+            end
+        else
+        end
+    end
+end, print)
+end)
+
+function CreateBuildingsForPlayer0()
+    local p = Player(0)
+    local u
+    local unitID
+    local t
+    local life
+    u = BlzCreateUnitWithSkin(p, FourCC("n000"), 1504.0, 2720.0, 270.000, FourCC("n000"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h000"), 6272.0, 3200.0, 270.000, FourCC("h000"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h001"), 4480.0, 3584.0, 270.000, FourCC("h001"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5696.0, 3840.0, 270.000, FourCC("h002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3264.0, 3072.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1792.0, 3072.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3072.0, 3712.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2304.0, 3712.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1728.0, 2304.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3392.0, 2304.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1856.0, 1472.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3264.0, 1600.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1792.0, 1024.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2944.0, 640.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3520.0, 960.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1984.0, 512.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3008.0, 960.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1920.0, 768.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2688.0, 1472.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2624.0, 1984.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2752.0, 2496.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3456.0, 3072.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1984.0, 3008.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1792.0, 3648.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 896.0, 1152.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 320.0, 1984.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 384.0, 3136.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1408.0, 3584.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 2624.0, 3456.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1920.0, 2560.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3008.0, 1920.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 2176.0, 1344.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3584.0, 1152.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4416.0, 1024.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5376.0, 1024.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5312.0, 1728.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4160.0, 1792.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3584.0, 2048.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3008.0, 2816.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3520.0, 3520.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4480.0, 3264.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5888.0, 2944.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5120.0, 2368.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3648.0, 2304.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 704.0, 3456.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1024.0, 2624.0, 270.000, FourCC("n002"))
+end
+
+function CreateBuildingsForPlayer1()
+    local p = Player(1)
+    local u
+    local unitID
+    local t
+    local life
+    u = BlzCreateUnitWithSkin(p, FourCC("n000"), 1376.0, -2784.0, 270.000, FourCC("n000"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h000"), 5888.0, -2624.0, 270.000, FourCC("h000"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h001"), 4288.0, -3712.0, 270.000, FourCC("h001"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5504.0, -3648.0, 270.000, FourCC("h002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3456.0, -192.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3072.0, -256.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2176.0, -320.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1664.0, -320.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1728.0, -896.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2368.0, -960.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3136.0, -960.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3456.0, -896.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1728.0, -1472.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2688.0, -1536.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3008.0, -1472.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3584.0, -1472.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3520.0, -2240.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2816.0, -2176.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2176.0, -2240.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1472.0, -2240.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2304.0, -3072.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2880.0, -3072.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3264.0, -3072.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3328.0, -3648.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -2624.0, -3712.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1856.0, -3776.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 384.0, -3584.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 192.0, -2688.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 320.0, -1792.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 768.0, -960.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1856.0, -704.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3072.0, -1024.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4096.0, -960.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5184.0, -1024.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5888.0, -704.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5376.0, -2112.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4224.0, -2112.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 2944.0, -2048.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 2944.0, -3008.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 2880.0, -3584.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3648.0, -3264.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4672.0, -3264.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1664.0, -2816.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1984.0, -1728.0, 270.000, FourCC("n002"))
+end
+
+function CreatePlayerBuildings()
+    CreateBuildingsForPlayer0()
+    CreateBuildingsForPlayer1()
+end
+
+function CreatePlayerUnits()
+end
+
+function CreateAllUnits()
+    CreatePlayerBuildings()
+    CreatePlayerUnits()
+end
+
+function Trig_Melee_Initialization_Actions()
+    MeleeStartingVisibility()
+    MeleeStartingHeroLimit()
+    MeleeGrantHeroItems()
+    MeleeStartingResources()
+    MeleeClearExcessUnits()
+    MeleeStartingUnits()
+    MeleeStartingAI()
+    MeleeInitVictoryDefeat()
+end
+
+function InitTrig_Melee_Initialization()
+    gg_trg_Melee_Initialization = CreateTrigger()
+    TriggerAddAction(gg_trg_Melee_Initialization, Trig_Melee_Initialization_Actions)
+end
+
+function InitCustomTriggers()
+    InitTrig_Melee_Initialization()
+end
+
+function RunInitializationTriggers()
+    ConditionalTriggerExecute(gg_trg_Melee_Initialization)
+end
+
+function InitCustomPlayerSlots()
+    SetPlayerStartLocation(Player(0), 0)
+    ForcePlayerStartLocation(Player(0), 0)
+    SetPlayerColor(Player(0), ConvertPlayerColor(0))
+    SetPlayerRacePreference(Player(0), RACE_PREF_HUMAN)
+    SetPlayerRaceSelectable(Player(0), true)
+    SetPlayerController(Player(0), MAP_CONTROL_USER)
+    SetPlayerStartLocation(Player(1), 1)
+    ForcePlayerStartLocation(Player(1), 1)
+    SetPlayerColor(Player(1), ConvertPlayerColor(1))
+    SetPlayerRacePreference(Player(1), RACE_PREF_HUMAN)
+    SetPlayerRaceSelectable(Player(1), true)
+    SetPlayerController(Player(1), MAP_CONTROL_USER)
+end
+
+function InitCustomTeams()
+    SetPlayerTeam(Player(0), 0)
+    SetPlayerTeam(Player(1), 1)
+end
+
+function InitAllyPriorities()
+    SetStartLocPrioCount(0, 1)
+    SetStartLocPrio(0, 0, 1, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrioCount(1, 1)
+    SetStartLocPrio(1, 0, 0, MAP_LOC_PRIO_HIGH)
+end
+
+function main()
+    SetCameraBounds(-4096.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), -4096.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM), 8192.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), 4096.0 - GetCameraMargin(CAMERA_MARGIN_TOP), -4096.0 + GetCameraMargin(CAMERA_MARGIN_LEFT), 4096.0 - GetCameraMargin(CAMERA_MARGIN_TOP), 8192.0 - GetCameraMargin(CAMERA_MARGIN_RIGHT), -4096.0 + GetCameraMargin(CAMERA_MARGIN_BOTTOM))
+    SetDayNightModels("Environment\\DNC\\DNCLordaeron\\DNCLordaeronTerrain\\DNCLordaeronTerrain.mdl", "Environment\\DNC\\DNCLordaeron\\DNCLordaeronUnit\\DNCLordaeronUnit.mdl")
+    NewSoundEnvironment("Default")
+    SetAmbientDaySound("LordaeronSummerDay")
+    SetAmbientNightSound("LordaeronSummerNight")
+    SetMapMusic("Music", true, 0)
+    CreateAllUnits()
+    InitBlizzard()
+    InitGlobals()
+    InitCustomTriggers()
+    RunInitializationTriggers()
+end
+
+function config()
+    SetMapName("TRIGSTR_003")
+    SetMapDescription("TRIGSTR_005")
+    SetPlayers(2)
+    SetTeams(2)
+    SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
+    DefineStartLocation(0, 4288.0, 2496.0)
+    DefineStartLocation(1, 4416.0, -2560.0)
+    InitCustomPlayerSlots()
+    InitCustomTeams()
+    InitAllyPriorities()
+end
+

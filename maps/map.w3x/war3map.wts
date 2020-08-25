@@ -1,0 +1,88 @@
+﻿STRING 1
+{
+Player 1
+}
+
+STRING 2
+{
+Force 1
+}
+
+STRING 3
+{
+Opposite Forces
+}
+
+STRING 4
+{
+Any
+}
+
+STRING 5
+{
+Nondescript
+}
+
+STRING 6
+{
+Forevka
+}
+
+STRING 7
+{
+Player 2
+}
+
+STRING 8
+{
+Force 2
+}
+
+STRING 9
+// Units: h000 (Port), Name (Name)
+{
+Port
+}
+
+STRING 10
+// Units: h000 (Port), Ubertip (Tooltip - Extended)
+{
+Gives you wood income
+}
+
+STRING 11
+// Units: h001 (Market), Name (Name)
+{
+Market
+}
+
+STRING 12
+// Units: h001 (Market), Ubertip (Tooltip - Extended)
+{
+Gives you gold income
+}
+
+STRING 13
+// Units: h002 (Storehouse), Name (Name)
+{
+Storehouse
+}
+
+STRING 14
+// Units: h002 (Storehouse), Ubertip (Tooltip - Extended)
+{
+Gives you gold income
+}
+
+STRING 15
+// Units: n002 (Visibility), Name (Name)
+{
+Visibility
+}
+
+STRING 16
+// Units: n003 (GetGoldCost), Name (Name)
+{
+GetGoldCost
+}
+
