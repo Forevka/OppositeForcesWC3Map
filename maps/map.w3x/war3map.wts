@@ -86,3 +86,31 @@ STRING 16
 GetGoldCost
 }
 
+STRING 17
+// Units: n004 (Obelisk), Description (Description)
+{
+Your main structure
+}
+
+STRING 18
+// Units: n004 (Obelisk), Name (Name)
+{
+Obelisk
+}
+
+STRING 19
+// Units: n004 (Obelisk), Tip (Tooltip - Basic)
+{
+Obelisk
+}
+
+STRING 20
+{
+Player 3
+}
+
+STRING 21
+{
+Player 4
+}
+

@@ -5,13 +5,13 @@ export const Units = {
 
 export const Coords = {
     FTeamSpawn: {
-        x: 1536,
-        y: 2820,
+        x: 1500,
+        y: 2720,
         radius: 1000,
     },
     STeamSpawn: {
-        x: 1407,
-        y: -3770,
+        x: 1375,
+        y: -2780,
         radius: 1000,
     },
 }

@@ -1,3 +1,4 @@
+import { Timer, Unit, Trigger, Camera } from "w3ts";
 import { State } from "State";
 import { PlayerForce } from "Utils";
 import { IncomeView } from "View/IncomeView";
@@ -19,25 +20,30 @@ export class IncomeLogic {
         } else {
             this._incomeState = State.STeam.Income
         }
+
+        new Timer().start(1, true, () => {
+            this.update()
+        })
     }
 
     public update() {
-        this._incomeView.update(this._secondToIncome)
         this._secondToIncome -= 1
 
-        if (this._secondToIncome > 0) {
-            return null;
+        if (this._secondToIncome == 0) {
+            const l = GetLocalPlayer()
+
+            const oldGold = GetPlayerState(l, PLAYER_STATE_RESOURCE_GOLD)
+            const oldWood = GetPlayerState(l, PLAYER_STATE_RESOURCE_LUMBER)
+
+            SetPlayerState(l, PLAYER_STATE_RESOURCE_GOLD, oldGold + this._incomeState.Gold)
+            SetPlayerState(l, PLAYER_STATE_RESOURCE_LUMBER, oldWood + this._incomeState.Wood)
+
+            DisplayTextToPlayer(l, 0,0, `Income:\n\n|c00FFFF00Gold|r ${this._incomeState.Gold}\n|c0096FF96Wood|r ${this._incomeState.Wood}`)
+
+            this._secondToIncome = this._maxSecondToIncome
         }
 
-        this._secondToIncome = this._maxSecondToIncome
-        const l = GetLocalPlayer()
-
-        const oldGold = GetPlayerState(l, PLAYER_STATE_RESOURCE_GOLD)
-        const oldWood = GetPlayerState(l, PLAYER_STATE_RESOURCE_LUMBER)
-
-        SetPlayerState(l, PLAYER_STATE_RESOURCE_GOLD, oldGold + this._incomeState.Gold)
-        SetPlayerState(l, PLAYER_STATE_RESOURCE_LUMBER, oldWood + this._incomeState.Wood)
-
-        DisplayTextToPlayer(l, 0,0, `Income:\n\n|c00FFFF00Gold|r ${this._incomeState.Gold}\n|c0096FF96Wood|r ${this._incomeState.Wood}`)
+        
+        this._incomeView.update(this._secondToIncome)
     }
 }

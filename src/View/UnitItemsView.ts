@@ -1,15 +1,28 @@
 export class UnitItemsView {
     private _box: framehandle;
     private _button: framehandle;
+    private _hideButton: framehandle;
+
+    private _buttonBox: framehandle;
+
     private _frameA: framehandle;
     private _frameB: framehandle;
 
     private _unitList: tasobject;
     private _itemList: tasobject;
     
+    private _isUnitsShow: boolean;
+    private _isItemsShow: boolean;
+    private _isHided: boolean;
+
     public static _instance: UnitItemsView;
 
     public constructor() {
+        this._isUnitsShow = true
+        this._isItemsShow = false
+        
+        this._isHided = true
+
         this._box = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
         BlzFrameSetSize(this._box, 0.255, 0.29)
         BlzFrameSetAbsPoint(this._box, FRAMEPOINT_TOPRIGHT, 0.80, 0.46)
@@ -19,18 +32,26 @@ export class UnitItemsView {
         BlzFrameSetSize(this._button, 0.1, 0.03)
         BlzFrameSetText(this._button, "To items")
 
+        this._hideButton = BlzCreateFrameByType("GLUETEXTBUTTON", "", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), "ScriptDialogButton",0)
+        BlzFrameSetAbsPoint(this._hideButton, FRAMEPOINT_TOPRIGHT, 0.67, 0.48)
+        BlzFrameSetSize(this._hideButton, 0.1, 0.03)
+        BlzFrameSetText(this._hideButton, "Hide")
+
         this._frameA = BlzCreateFrameByType("FRAME", "", this._box, "",0)
         BlzFrameSetSize(this._frameA, 0.23, 0.001)
         //BlzFrameSetAbsPoint(frameA, FRAMEPOINT_TOPRIGHT, 0.78, 0.54)
         BlzFrameSetPoint(this._frameA, FRAMEPOINT_TOPLEFT, this._box, FRAMEPOINT_TOPLEFT, 0, -0.02)
+        BlzFrameSetVisible(this._frameB, this._isUnitsShow)
 
         this._frameB = BlzCreateFrameByType("FRAME", "", this._box, "",0)
         BlzFrameSetSize(this._frameB, 0.23, 0.001)
         // BlzFrameSetAbsPoint(frameB, FRAMEPOINT_TOPRIGHT, 0.78, 0.54)
         BlzFrameSetPoint(this._frameB, FRAMEPOINT_TOPLEFT, this._box, FRAMEPOINT_TOPLEFT, 0, -0.02)
-        BlzFrameSetVisible(this._frameB, false)
+        BlzFrameSetVisible(this._frameB, this._isItemsShow)
 
         this.changeFrameTrigger()
+        this.hideTrigger()
+
         this.createUnitList()
         this.createItemList()
     }
@@ -64,20 +85,55 @@ export class UnitItemsView {
             BlzFrameSetEnable(BlzGetTriggerFrame(), false)
             BlzFrameSetEnable(BlzGetTriggerFrame(), true)
             if (GetLocalPlayer() == GetTriggerPlayer()) {
-                if (BlzFrameIsVisible(this._frameA)) {
-                    BlzFrameSetVisible(this._frameA, false)
-                    BlzFrameSetVisible(this._frameB, true)
+                if (this._isUnitsShow) {
+                    this._isUnitsShow = false
+                    this._isItemsShow = true
+                    UpdateTasButtonList(this._unitList)
+                    BlzFrameSetText(this._button, "To units")
+                } else if (this._isItemsShow) {
+                    this._isUnitsShow = true
+                    this._isItemsShow = false
                     UpdateTasButtonList(this._itemList)
                     BlzFrameSetText(this._button, "To items")
-                } else if (BlzFrameIsVisible(this._frameB)) {
-                    BlzFrameSetVisible(this._frameA, true)
-                    BlzFrameSetVisible(this._frameB, false)
-                    UpdateTasButtonList(this._itemList)
-                    BlzFrameSetText(this._button, "To units")
                 }
+
+                BlzFrameSetVisible(this._frameA, this._isUnitsShow)
+                BlzFrameSetVisible(this._frameB, this._isItemsShow)
             }
         })
         BlzTriggerRegisterFrameEvent(trigger, this._button, FRAMEEVENT_CONTROL_CLICK)
+    }
+
+    private hideTrigger() {
+        let trigger = CreateTrigger()
+        TriggerAddAction(trigger, function() {
+            print('ok')
+            xpcall(() => {
+                print('ok 2')
+                BlzFrameSetEnable(BlzGetTriggerFrame(), false)
+                BlzFrameSetEnable(BlzGetTriggerFrame(), true)
+                if (GetLocalPlayer() == GetTriggerPlayer()) {
+                    if (this._isHided) {
+                        this._isHided = false
+                        //BlzFrameSetVisible(this._frameA, this._isUnitsShow)
+                        //BlzFrameSetVisible(this._frameB, this._isItemsShow)
+                        //BlzFrameSetEnable(this._button, true)
+
+                        BlzFrameSetText(this._hideButton, "Show store")
+                    } else {
+                        this._isHided = true
+                        //BlzFrameSetVisible(this._frameA, false)
+                        //BlzFrameSetEnable(this._button, false)
+                        
+                        UpdateTasButtonList(this._unitList)
+                        UpdateTasButtonList(this._itemList)
+                        BlzFrameSetText(this._hideButton, "Hide")
+                    }
+                    BlzFrameSetVisible(this._box, this._isHided)
+                }
+            }, print)
+        })
+        BlzTriggerRegisterFrameEvent(trigger, this._hideButton, FRAMEEVENT_CONTROL_CLICK)
     }
 
     private createUnitList() {

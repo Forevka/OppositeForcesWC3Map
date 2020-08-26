@@ -8,6 +8,7 @@ import { IncomeView } from "View/IncomeView";
 import { IncomeLogic } from "System/IncomeLogic";
 import { Commands } from "System/Commands";
 import { UnitItemsView } from "View/UnitItemsView";
+import { SpawnSystem } from "System/SpawnSystem";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -26,11 +27,11 @@ function tsMain() {
   new Timer().start(1.00, true, () => {
     unit.color = Players[math.random(0, bj_MAX_PLAYERS)].color
   });*/
-  for (let i = 0; i < 16; i++) {
+  /*for (let i = 0; i < 16; i++) {
     const dir = Deg2Rad(360 - i * (360/12));
     CreateUnit(Player(GetPlayerNeutralPassive()), Units.SpawnRune, Coords.FTeamSpawn.x + Cos(-dir) * Coords.FTeamSpawn.radius, Coords.FTeamSpawn.y + Sin(-dir) * Coords.FTeamSpawn.radius, 0);
     CreateUnit(Player(GetPlayerNeutralPassive()), Units.SpawnRune, Coords.STeamSpawn.x + Cos(-dir) * Coords.STeamSpawn.radius, Coords.STeamSpawn.y + Sin(-dir) * Coords.STeamSpawn.radius, 0);
-  }
+  }*/
   /*
     public OnClick(action: () => void) {
     const t = CreateTrigger();
@@ -43,6 +44,12 @@ function tsMain() {
   
   let state = State.FTeam
 
+
+  let fTeamTextTag = CreateTextTagLocBJ('Spawn info', Location(Coords.FTeamSpawn.x, Coords.FTeamSpawn.y), 100, 25, 255,255,255,1)
+  let sTeamTextTag = CreateTextTagLocBJ('Spawn info', Location(Coords.STeamSpawn.x, Coords.STeamSpawn.y), 100, 25, 255,255,255,1)
+
+  let spawnSystem = new SpawnSystem(fTeamTextTag, sTeamTextTag)
+
   if (PlayerForce() === 1) {
     state = State.FTeam
   } else {
@@ -50,23 +57,6 @@ function tsMain() {
   }
 
   const mainFrame = BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
-
-  new Timer().start(10.00, true, () => {
-    const loc = Location(Coords.FTeamSpawn.x, Coords.FTeamSpawn.y);
-    const units = GetUnitsInRangeOfLocAll(Coords.FTeamSpawn.radius, loc);
-    const size = BlzGroupGetSize(units);
-
-    for (let i = 0; i < size; i++) {
-      const unit = BlzGroupUnitAt(units, i);
-      const unitId = GetUnitTypeId(unit)
-
-      if (unitId === Units.SpawnRune || unitId === Units.SpawnBattleTag) {
-        continue;
-      }
-      
-      print(`Unit: ${GetUnitName(unit)}`);
-    }
-  })
 
   const incomeView = new IncomeView()
   const incomeLogic = new IncomeLogic(incomeView)
@@ -76,9 +66,6 @@ function tsMain() {
     incomeView.update(10)
   })
 
-  new Timer().start(1, true, () => {
-    incomeLogic.update()
-  })
 
   const commands = new Commands()
   commands.command('!test', (text: string, args: string[]) => {
@@ -110,19 +97,8 @@ function tsMain() {
     unitItemsView.addUnit(FourCC("Hpal"))
     unitItemsView.addUnit(FourCC("hbot"))
     unitItemsView.addUnit(FourCC("hbsh"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("hdes"))
-    unitItemsView.addUnit(FourCC("Hmkg"))
-    unitItemsView.addUnit(FourCC("Hmkg"))
-    unitItemsView.addUnit(FourCC("Hmkg"))
-    unitItemsView.addUnit(FourCC("Hmkg"))
 
-    unitItemsView.addItem(FourCC("ckng"))
+    /*unitItemsView.addItem(FourCC("ckng"))
     unitItemsView.addItem(FourCC("modt"))
     unitItemsView.addItem(FourCC("tkno"))
     unitItemsView.addItem(FourCC("ratf"))
@@ -163,7 +139,7 @@ function tsMain() {
     unitItemsView.addItem(FourCC("hlst"))
     unitItemsView.addItem(FourCC("mnst"))
     unitItemsView.addItem(FourCC("belv"))
-    unitItemsView.addItem(FourCC("bgst"))
+    unitItemsView.addItem(FourCC("bgst"))*/
     unitItemsView.addItem(FourCC("ciri"))
     unitItemsView.addItem(FourCC("lhst"))
     unitItemsView.addItem(FourCC("afac"))
