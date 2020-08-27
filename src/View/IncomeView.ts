@@ -1,8 +1,7 @@
-import { State } from "State";
-import { PlayerForce } from "Utils";
+import { State, UserState } from "State";
 
 export class IncomeView {
-    private _incomeState;
+    private _userState: UserState;
 
     private _multiBoard: multiboard;
     private _multiFrame: framehandle;
@@ -13,11 +12,12 @@ export class IncomeView {
     private _itemWoodValue: multiboarditem;
 
     public constructor() {
-        if (PlayerForce() === 1) {
+        /*if (PlayerForce() === 1) {
             this._incomeState = State.FTeam.Income
         } else {
             this._incomeState = State.STeam.Income
-        }
+        }*/
+        this._userState = State[GetPlayerId(GetLocalPlayer())]
     }
 
     public init() {
@@ -46,8 +46,8 @@ export class IncomeView {
     }
 
     public update(secondLeft: number) {
-        MultiboardSetItemValue(this._itemGoldValue, `${this._incomeState.Gold}`)
-        MultiboardSetItemValue(this._itemWoodValue, `${this._incomeState.Wood}`)
-        MultiboardSetTitleText(this._multiBoard, `Income in ${secondLeft}`)
+        MultiboardSetItemValue(this._itemGoldValue, `${this._userState.Income.Gold}`)
+        MultiboardSetItemValue(this._itemWoodValue, `${this._userState.Income.Wood}`)
+        MultiboardSetTitleText(this._multiBoard, `Income in ${secondLeft} for ${GetPlayerId(GetLocalPlayer())}`)
     }
 }

@@ -114,3 +114,247 @@ STRING 21
 Player 4
 }
 
+STRING 22
+{
+Player 5
+}
+
+STRING 23
+{
+Player 6
+}
+
+STRING 24
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Gold Income
+}
+
+STRING 25
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 26
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 27
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 28
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 29
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 30
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Gold Income 2
+}
+
+STRING 31
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Gold Income 3
+}
+
+STRING 32
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Gold Income 4
+}
+
+STRING 33
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Gold Income 5
+}
+
+STRING 34
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your income by 50
+}
+
+STRING 35
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Increase your income by 60
+}
+
+STRING 36
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your income by 60
+}
+
+STRING 37
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your income by 100
+}
+
+STRING 38
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your income by 120
+}
+
+STRING 39
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your income by 130
+}
+
+STRING 40
+// Upgrades: R000 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Increase your income by 50
+}
+
+STRING 41
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+L
+}
+
+STRING 42
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+L
+}
+
+STRING 43
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+L
+}
+
+STRING 44
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+L
+}
+
+STRING 45
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your wood income by 50
+}
+
+STRING 46
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your wood income by 75
+}
+
+STRING 47
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your wood income by 80
+}
+
+STRING 48
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your wood income by 100
+}
+
+STRING 49
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your wood income by 150
+}
+
+STRING 50
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Increase your wood income by 120
+}
+
+STRING 51
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Wood income
+}
+
+STRING 52
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Wood income 
+}
+
+STRING 53
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Wood income 
+}
+
+STRING 54
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Wood income 
+}
+
+STRING 55
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Wood income 
+}
+
+STRING 56
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Ubertip (Tooltip - Extended)
+{
+Wood income 
+}
+
+STRING 58
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Wood income 2
+}
+
+STRING 59
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Wood income 3
+}
+
+STRING 60
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Wood income 4
+}
+
+STRING 61
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Wood income 5
+}
+
+STRING 62
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Wood income 6
+}
+
+STRING 63
+// Upgrades: R001 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Wood income
+}
+

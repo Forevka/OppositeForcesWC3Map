@@ -1,3 +1,4 @@
+gg_trg_StartResources = nil
 gg_trg_Melee_Initialization = nil
 function InitGlobals()
 end
@@ -540,7 +541,7 @@ function CreateBuildingsForPlayer0()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4224.0, 1088.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5376.0, 1024.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5312.0, 1728.0, 270.000, FourCC("n002"))
-    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4160.0, 1792.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4864.0, 1792.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3584.0, 2048.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3008.0, 2816.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3520.0, 3520.0, 270.000, FourCC("n002"))
@@ -550,7 +551,6 @@ function CreateBuildingsForPlayer0()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3648.0, 2304.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 704.0, 3456.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1024.0, 2624.0, 270.000, FourCC("n002"))
-    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2624.0, 3584.0, 270.000, FourCC("n004"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7232.0, 3712.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, 1152.0, 270.000, FourCC("n002"))
 end
@@ -605,9 +605,24 @@ function CreateBuildingsForPlayer1()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4672.0, -3264.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1664.0, -2816.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1984.0, -1728.0, 270.000, FourCC("n002"))
-    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2560.0, -3520.0, 270.000, FourCC("n004"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, -1088.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, -2880.0, 270.000, FourCC("n002"))
+end
+
+function CreateUnitsForPlayer1()
+    local p = Player(1)
+    local u
+    local unitID
+    local t
+    local life
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1172.5, -2687.1, 330.281, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1104.6, -2866.2, 126.446, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1342.2, -3186.6, 332.808, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1811.9, -2839.6, 191.926, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1501.8, -2515.1, 82.752, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hrif"), 1597.6, -3184.8, 3.142, FourCC("hrif"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hrif"), 1728.3, -3097.7, 167.360, FourCC("hrif"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hrif"), 1107.1, -3138.0, 5.658, FourCC("hrif"))
 end
 
 function CreateBuildingsForPlayer2()
@@ -630,6 +645,24 @@ function CreateBuildingsForPlayer3()
     u = BlzCreateUnitWithSkin(p, FourCC("h001"), 4352.0, -512.0, 270.000, FourCC("h001"))
     u = BlzCreateUnitWithSkin(p, FourCC("h000"), 6272.0, -768.0, 270.000, FourCC("h000"))
     u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5376.0, -768.0, 270.000, FourCC("h002"))
+end
+
+function CreateBuildingsForPlayer4()
+    local p = Player(4)
+    local u
+    local unitID
+    local t
+    local life
+    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2624.0, 3456.0, 270.000, FourCC("n004"))
+end
+
+function CreateBuildingsForPlayer5()
+    local p = Player(5)
+    local u
+    local unitID
+    local t
+    local life
+    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2560.0, -3520.0, 270.000, FourCC("n004"))
 end
 
 function CreateNeutralPassiveBuildings()
@@ -677,9 +710,12 @@ function CreatePlayerBuildings()
     CreateBuildingsForPlayer1()
     CreateBuildingsForPlayer2()
     CreateBuildingsForPlayer3()
+    CreateBuildingsForPlayer4()
+    CreateBuildingsForPlayer5()
 end
 
 function CreatePlayerUnits()
+    CreateUnitsForPlayer1()
 end
 
 function CreateAllUnits()
@@ -688,10 +724,23 @@ function CreateAllUnits()
     CreatePlayerUnits()
 end
 
+function Trig_StartResources_Func001A()
+    SetPlayerStateBJ(GetEnumPlayer(), PLAYER_STATE_RESOURCE_LUMBER, 200)
+    SetPlayerStateBJ(GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD, 320)
+end
+
+function Trig_StartResources_Actions()
+    ForForce(GetPlayersAll(), Trig_StartResources_Func001A)
+end
+
+function InitTrig_StartResources()
+    gg_trg_StartResources = CreateTrigger()
+    TriggerAddAction(gg_trg_StartResources, Trig_StartResources_Actions)
+end
+
 function Trig_Melee_Initialization_Actions()
     MeleeStartingVisibility()
     MeleeStartingHeroLimit()
-    MeleeStartingAI()
 end
 
 function InitTrig_Melee_Initialization()
@@ -700,10 +749,12 @@ function InitTrig_Melee_Initialization()
 end
 
 function InitCustomTriggers()
+    InitTrig_StartResources()
     InitTrig_Melee_Initialization()
 end
 
 function RunInitializationTriggers()
+    ConditionalTriggerExecute(gg_trg_StartResources)
     ConditionalTriggerExecute(gg_trg_Melee_Initialization)
 end
 
@@ -712,24 +763,38 @@ function InitCustomPlayerSlots()
     ForcePlayerStartLocation(Player(0), 0)
     SetPlayerColor(Player(0), ConvertPlayerColor(0))
     SetPlayerRacePreference(Player(0), RACE_PREF_HUMAN)
-    SetPlayerRaceSelectable(Player(0), true)
+    SetPlayerRaceSelectable(Player(0), false)
     SetPlayerController(Player(0), MAP_CONTROL_USER)
     SetPlayerStartLocation(Player(1), 1)
     ForcePlayerStartLocation(Player(1), 1)
     SetPlayerColor(Player(1), ConvertPlayerColor(1))
     SetPlayerRacePreference(Player(1), RACE_PREF_HUMAN)
-    SetPlayerRaceSelectable(Player(1), true)
+    SetPlayerRaceSelectable(Player(1), false)
     SetPlayerController(Player(1), MAP_CONTROL_USER)
     SetPlayerStartLocation(Player(2), 2)
+    ForcePlayerStartLocation(Player(2), 2)
     SetPlayerColor(Player(2), ConvertPlayerColor(2))
     SetPlayerRacePreference(Player(2), RACE_PREF_HUMAN)
-    SetPlayerRaceSelectable(Player(2), true)
+    SetPlayerRaceSelectable(Player(2), false)
     SetPlayerController(Player(2), MAP_CONTROL_USER)
     SetPlayerStartLocation(Player(3), 3)
+    ForcePlayerStartLocation(Player(3), 3)
     SetPlayerColor(Player(3), ConvertPlayerColor(3))
-    SetPlayerRacePreference(Player(3), RACE_PREF_NIGHTELF)
-    SetPlayerRaceSelectable(Player(3), true)
+    SetPlayerRacePreference(Player(3), RACE_PREF_HUMAN)
+    SetPlayerRaceSelectable(Player(3), false)
     SetPlayerController(Player(3), MAP_CONTROL_USER)
+    SetPlayerStartLocation(Player(4), 4)
+    ForcePlayerStartLocation(Player(4), 4)
+    SetPlayerColor(Player(4), ConvertPlayerColor(4))
+    SetPlayerRacePreference(Player(4), RACE_PREF_HUMAN)
+    SetPlayerRaceSelectable(Player(4), false)
+    SetPlayerController(Player(4), MAP_CONTROL_COMPUTER)
+    SetPlayerStartLocation(Player(5), 5)
+    ForcePlayerStartLocation(Player(5), 5)
+    SetPlayerColor(Player(5), ConvertPlayerColor(5))
+    SetPlayerRacePreference(Player(5), RACE_PREF_HUMAN)
+    SetPlayerRaceSelectable(Player(5), false)
+    SetPlayerController(Player(5), MAP_CONTROL_COMPUTER)
 end
 
 function InitCustomTeams()
@@ -737,18 +802,38 @@ function InitCustomTeams()
     SetPlayerState(Player(0), PLAYER_STATE_ALLIED_VICTORY, 1)
     SetPlayerTeam(Player(2), 0)
     SetPlayerState(Player(2), PLAYER_STATE_ALLIED_VICTORY, 1)
+    SetPlayerTeam(Player(4), 0)
+    SetPlayerState(Player(4), PLAYER_STATE_ALLIED_VICTORY, 1)
     SetPlayerAllianceStateAllyBJ(Player(0), Player(2), true)
+    SetPlayerAllianceStateAllyBJ(Player(0), Player(4), true)
     SetPlayerAllianceStateAllyBJ(Player(2), Player(0), true)
+    SetPlayerAllianceStateAllyBJ(Player(2), Player(4), true)
+    SetPlayerAllianceStateAllyBJ(Player(4), Player(0), true)
+    SetPlayerAllianceStateAllyBJ(Player(4), Player(2), true)
     SetPlayerAllianceStateVisionBJ(Player(0), Player(2), true)
+    SetPlayerAllianceStateVisionBJ(Player(0), Player(4), true)
     SetPlayerAllianceStateVisionBJ(Player(2), Player(0), true)
+    SetPlayerAllianceStateVisionBJ(Player(2), Player(4), true)
+    SetPlayerAllianceStateVisionBJ(Player(4), Player(0), true)
+    SetPlayerAllianceStateVisionBJ(Player(4), Player(2), true)
     SetPlayerTeam(Player(1), 1)
     SetPlayerState(Player(1), PLAYER_STATE_ALLIED_VICTORY, 1)
     SetPlayerTeam(Player(3), 1)
     SetPlayerState(Player(3), PLAYER_STATE_ALLIED_VICTORY, 1)
+    SetPlayerTeam(Player(5), 1)
+    SetPlayerState(Player(5), PLAYER_STATE_ALLIED_VICTORY, 1)
     SetPlayerAllianceStateAllyBJ(Player(1), Player(3), true)
+    SetPlayerAllianceStateAllyBJ(Player(1), Player(5), true)
     SetPlayerAllianceStateAllyBJ(Player(3), Player(1), true)
+    SetPlayerAllianceStateAllyBJ(Player(3), Player(5), true)
+    SetPlayerAllianceStateAllyBJ(Player(5), Player(1), true)
+    SetPlayerAllianceStateAllyBJ(Player(5), Player(3), true)
     SetPlayerAllianceStateVisionBJ(Player(1), Player(3), true)
+    SetPlayerAllianceStateVisionBJ(Player(1), Player(5), true)
     SetPlayerAllianceStateVisionBJ(Player(3), Player(1), true)
+    SetPlayerAllianceStateVisionBJ(Player(3), Player(5), true)
+    SetPlayerAllianceStateVisionBJ(Player(5), Player(1), true)
+    SetPlayerAllianceStateVisionBJ(Player(5), Player(3), true)
 end
 
 function InitAllyPriorities()
@@ -760,6 +845,18 @@ function InitAllyPriorities()
     SetStartLocPrio(2, 0, 0, MAP_LOC_PRIO_HIGH)
     SetStartLocPrioCount(3, 1)
     SetStartLocPrio(3, 0, 1, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrioCount(4, 4)
+    SetStartLocPrio(4, 0, 0, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrio(4, 1, 2, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrio(4, 2, 3, MAP_LOC_PRIO_LOW)
+    SetStartLocPrio(4, 3, 5, MAP_LOC_PRIO_LOW)
+    SetEnemyStartLocPrioCount(4, 1)
+    SetEnemyStartLocPrio(4, 0, 0, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrioCount(5, 4)
+    SetStartLocPrio(5, 0, 1, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrio(5, 1, 2, MAP_LOC_PRIO_LOW)
+    SetStartLocPrio(5, 2, 3, MAP_LOC_PRIO_HIGH)
+    SetStartLocPrio(5, 3, 4, MAP_LOC_PRIO_LOW)
 end
 
 function main()
@@ -779,13 +876,15 @@ end
 function config()
     SetMapName("TRIGSTR_003")
     SetMapDescription("TRIGSTR_005")
-    SetPlayers(4)
-    SetTeams(4)
+    SetPlayers(6)
+    SetTeams(6)
     SetGamePlacement(MAP_PLACEMENT_TEAMS_TOGETHER)
-    DefineStartLocation(0, 4288.0, 2496.0)
-    DefineStartLocation(1, 4416.0, -2560.0)
-    DefineStartLocation(2, 4288.0, 1600.0)
-    DefineStartLocation(3, 4416.0, -1472.0)
+    DefineStartLocation(0, 5248.0, 3072.0)
+    DefineStartLocation(1, 4672.0, -3008.0)
+    DefineStartLocation(2, 4992.0, 1600.0)
+    DefineStartLocation(3, 4416.0, -1216.0)
+    DefineStartLocation(4, 192.0, 2688.0)
+    DefineStartLocation(5, 64.0, -2816.0)
     InitCustomPlayerSlots()
     InitCustomTeams()
     InitAllyPriorities()

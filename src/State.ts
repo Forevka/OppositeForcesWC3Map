@@ -1,3 +1,27 @@
+export interface UserState {
+    Income: {
+        Gold: number;
+        Wood: number;
+        GoldLvl: number;
+        WoodLvl: number;
+    }
+}
+
+export let State: UserState[] = []
+
+for (let i = 0; i < bj_MAX_PLAYER_SLOTS; i++) {
+    //Players[i] = MapPlayer.fromHandle(Player(i));
+    State.push({
+        Income: {
+            Gold: 25,
+            Wood: 15,
+            GoldLvl: 0,
+            WoodLvl: 0,
+        }
+    })
+    print(`Player state ${i} `)
+}
+/*
 export const State = {
     FTeam: {
         Income: {
@@ -11,4 +35,4 @@ export const State = {
             Wood: 5,
         },
     },
-}
+}*/

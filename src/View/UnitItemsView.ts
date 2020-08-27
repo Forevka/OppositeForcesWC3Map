@@ -24,7 +24,7 @@ export class UnitItemsView {
         this._isHided = true
 
         this._box = BlzCreateFrame("EscMenuBackdrop", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 0, 0)
-        BlzFrameSetSize(this._box, 0.255, 0.29)
+        BlzFrameSetSize(this._box, 0.255, 0.26)
         BlzFrameSetAbsPoint(this._box, FRAMEPOINT_TOPRIGHT, 0.80, 0.46)
 
         this._button = BlzCreateFrameByType("GLUETEXTBUTTON", "", this._box, "ScriptDialogButton",0)
@@ -137,7 +137,7 @@ export class UnitItemsView {
     }
 
     private createUnitList() {
-        this._unitList = CreateTasButtonListV2(8, this._frameA, function(data, buttonListObject, dataIndex) {
+        this._unitList = CreateTasButtonListV2(6, this._frameA, function(data, buttonListObject, dataIndex) {
             let gold = 0
             let lumber = 0
             if (!IsUnitIdType(data, UNIT_TYPE_HERO)) {

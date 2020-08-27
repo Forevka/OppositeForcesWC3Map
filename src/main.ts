@@ -9,6 +9,7 @@ import { IncomeLogic } from "System/IncomeLogic";
 import { Commands } from "System/Commands";
 import { UnitItemsView } from "View/UnitItemsView";
 import { SpawnSystem } from "System/SpawnSystem";
+import { UpgradesLogic } from "System/Upgrades";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -42,7 +43,7 @@ function tsMain() {
    */
   //
   
-  let state = State.FTeam
+  //let state = State.FTeam
 
 
   let fTeamTextTag = CreateTextTagLocBJ('Spawn info', Location(Coords.FTeamSpawn.x, Coords.FTeamSpawn.y), 100, 25, 255,255,255,1)
@@ -50,16 +51,18 @@ function tsMain() {
 
   let spawnSystem = new SpawnSystem(fTeamTextTag, sTeamTextTag)
 
-  if (PlayerForce() === 1) {
+  /*if (PlayerForce() === 1) {
     state = State.FTeam
   } else {
     state = State.STeam
-  }
+  }*/
 
   const mainFrame = BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0)
 
   const incomeView = new IncomeView()
   const incomeLogic = new IncomeLogic(incomeView)
+
+  const upgradeLogic = new UpgradesLogic()
 
   new Timer().start(0.5, false, () => {
     incomeView.init()
@@ -87,16 +90,46 @@ function tsMain() {
     }
   })
 
+  print(bj_MAX_PLAYER_SLOTS)
+
   let unitItemsView = UnitItemsView.Instance
+
+  
 
   new Timer().start(0.0, false, () => {
 
-    unitItemsView.addUnit(FourCC("Hamg"))
+    /*unitItemsView.addUnit(FourCC("Hamg"))
     unitItemsView.addUnit(FourCC("Hblm"))
     unitItemsView.addUnit(FourCC("Hmkg"))
-    unitItemsView.addUnit(FourCC("Hpal"))
-    unitItemsView.addUnit(FourCC("hbot"))
-    unitItemsView.addUnit(FourCC("hbsh"))
+    unitItemsView.addUnit(FourCC("Hpal"))*/
+
+    unitItemsView.addUnit(Units.Human.Footman)
+    unitItemsView.addUnit(Units.Human.Rifleman)
+    unitItemsView.addUnit(Units.Human.AntiMage)
+    unitItemsView.addUnit(Units.Human.Knight)
+    unitItemsView.addUnit(Units.Human.Priest)
+    unitItemsView.addUnit(Units.Human.Sorcer)
+
+    unitItemsView.addUnit(Units.Orc.Grunt)
+    unitItemsView.addUnit(Units.Orc.Hunter)
+    unitItemsView.addUnit(Units.Orc.Raider)
+    unitItemsView.addUnit(Units.Orc.Kodo)
+    unitItemsView.addUnit(Units.Orc.Doctor)
+    unitItemsView.addUnit(Units.Orc.Shaman)
+
+    unitItemsView.addUnit(Units.NightElf.Archer)
+    unitItemsView.addUnit(Units.NightElf.Dryad)
+    unitItemsView.addUnit(Units.NightElf.Huntres)
+    unitItemsView.addUnit(Units.NightElf.DruidBear)
+    unitItemsView.addUnit(Units.NightElf.DruidBearInForm)
+    unitItemsView.addUnit(Units.NightElf.DruidV)
+    unitItemsView.addUnit(Units.NightElf.MoutainGiant)
+
+    unitItemsView.addUnit(Units.Undead.Ghoul)
+    unitItemsView.addUnit(Units.Undead.Cryptfiend)
+    unitItemsView.addUnit(Units.Undead.Abomination)
+    unitItemsView.addUnit(Units.Undead.Banshe)
+    unitItemsView.addUnit(Units.Undead.Necromant)
 
     /*unitItemsView.addItem(FourCC("ckng"))
     unitItemsView.addItem(FourCC("modt"))
