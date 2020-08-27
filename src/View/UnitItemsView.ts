@@ -91,12 +91,12 @@ export class UnitItemsView {
                 if (this._isUnitsShow) {
                     this._isUnitsShow = false
                     this._isItemsShow = true
-                    UpdateTasButtonList(this._unitList)
+                    UpdateTasButtonList(this._itemList)
                     BlzFrameSetText(this._button, "To units")
                 } else if (this._isItemsShow) {
                     this._isUnitsShow = true
                     this._isItemsShow = false
-                    UpdateTasButtonList(this._itemList)
+                    UpdateTasButtonList(this._unitList)
                     BlzFrameSetText(this._button, "To items")
                 }
 
