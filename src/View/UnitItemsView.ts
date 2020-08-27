@@ -1,3 +1,6 @@
+import { Coords } from "Config";
+import { Force, MapPlayer } from "w3ts/index";
+
 export class UnitItemsView {
     private _box: framehandle;
     private _button: framehandle;
@@ -148,12 +151,18 @@ export class UnitItemsView {
                 lumber = 0
             }
             let player = GetTriggerPlayer()
+            let state;
+            if (Force.fromHandle(GetForceOfPlayer(player)).hasPlayer(MapPlayer.fromHandle(Player(0)))) {
+                state = Coords.FTeamCreate
+            } else {
+                state = Coords.STeamCreate
+            }
             
             if (GetPlayerState(player, PLAYER_STATE_RESOURCE_GOLD) >= gold) {
                 if (GetPlayerState(player, PLAYER_STATE_RESOURCE_LUMBER) >= lumber) {
                     AdjustPlayerStateSimpleBJ(player, PLAYER_STATE_RESOURCE_GOLD, -gold)
                     AdjustPlayerStateSimpleBJ(player, PLAYER_STATE_RESOURCE_LUMBER, -lumber)
-                    CreateUnit(player, data, GetPlayerStartLocationX(player), GetPlayerStartLocationY(player), 0)
+                    CreateUnit(player, data, state.x, state.y, 0)
                 } /*else if (!GetSoundIsPlaying(SoundNoLumber[GetPlayerRace(player)])) {
                     StartSoundForPlayerBJ(player, SoundNoLumber[GetPlayerRace(player)])
                 }*/
