@@ -358,3 +358,67 @@ STRING 63
 Wood income
 }
 
+STRING 64
+// Abilities: A002 (Speed up), Name (Name)
+{
+Speed up
+}
+
+STRING 67
+// Abilities: A003 (Speed up), Name (Name)
+{
+Speed up
+}
+
+STRING 68
+// Buffs/Effects: B000 (), Buffubertip (Tooltip - Extended)
+{
+This unit have increased movement speed
+}
+
+STRING 69
+{
+Player 7
+}
+
+STRING 70
+{
+Player 8
+}
+
+STRING 71
+// Buffs/Effects: B000 (), Bufftip (Tooltip)
+{
+Speed up
+}
+
+STRING 72
+// Abilities: A002 (Speed up), Ubertip (Tooltip - Normal - Extended)
+{
++35% to movement speed
+}
+
+STRING 76
+// Abilities: A003 (Speed up), Hotkey (Hotkey - Normal)
+{
+W
+}
+
+STRING 80
+// Units: o000 (DUMMY STASIS TRAP FOR AOE SPELLS), Name (Name)
+{
+DUMMY STASIS TRAP FOR AOE SPELLS
+}
+
+STRING 81
+// Abilities: A003 (Speed up), Tip (Tooltip - Normal)
+{
++35% movement speed units in range
+}
+
+STRING 82
+// Abilities: A003 (Speed up), Ubertip (Tooltip - Normal - Extended)
+{
++35% movement speed units in range
+}
+

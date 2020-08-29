@@ -11,15 +11,14 @@ export let State: UserState[] = []
 
 for (let i = 0; i < bj_MAX_PLAYER_SLOTS; i++) {
     //Players[i] = MapPlayer.fromHandle(Player(i));
-    State.push({
+    State[i] = {
         Income: {
             Gold: 25,
             Wood: 15,
             GoldLvl: 0,
             WoodLvl: 0,
         }
-    })
-    print(`Player state ${i} `)
+    }
 }
 /*
 export const State = {

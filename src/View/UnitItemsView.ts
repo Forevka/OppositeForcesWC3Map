@@ -102,6 +102,7 @@ export class UnitItemsView {
 
                 BlzFrameSetVisible(this._frameA, this._isUnitsShow)
                 BlzFrameSetVisible(this._frameB, this._isItemsShow)
+                
             }
         })
         BlzTriggerRegisterFrameEvent(trigger, this._button, FRAMEEVENT_CONTROL_CLICK)

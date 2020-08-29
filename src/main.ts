@@ -1,7 +1,7 @@
-import { Timer, Unit, Trigger, Camera } from "w3ts";
+import { Timer, Unit, Trigger, Camera, Quest } from "w3ts";
 import { Players } from "w3ts/globals";
 import { addScriptHook, W3TS_HOOK } from "w3ts/hooks";
-import { Units, Coords } from "Config";
+import { Units, Coords, Icons, CURRENT_VERSION } from "Config";
 import { State } from "State";
 import { PlayerForce } from "Utils";
 import { IncomeView } from "View/IncomeView";
@@ -10,17 +10,14 @@ import { Commands } from "System/Commands";
 import { UnitItemsView } from "View/UnitItemsView";
 import { SpawnSystem } from "System/SpawnSystem";
 import { UpgradesLogic } from "System/Upgrades";
+import { DisplayDamage } from "System/DisplayDamage";
+import { speedUpAOESpell } from "Spells/AOE/SpeedUp";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
 const TSTL_VERSION = compiletime(() => require("typescript-to-lua").version);
 
 function tsMain() {
-  print(`Build: ${BUILD_DATE}`);
-  print(`Typescript: v${TS_VERSION}`);
-  print(`Transpiler: v${TSTL_VERSION}`);
-  print(" ");
-  print("Welcome to TypeScript!");
 
   /*const unit = new Unit(Players[0], FourCC("hfoo"), 0, 0, 270);
   unit.name = "TypeScript";
@@ -69,39 +66,36 @@ function tsMain() {
     incomeView.update(10)
   })
 
-
   const commands = new Commands()
-  commands.command('!test', (text: string, args: string[]) => {
-    print('test works ok')
-    print(text)
-  })
+  commands.registerCommands()
 
-  commands.command('!gg', (text: string, args: string[]) => {
-    print('GG')
-  })
+  const BUILD_INFO = [
+    `Build: ${BUILD_DATE}`,
+    `Typescript: v${TS_VERSION}`,
+    `Transpiler: v${TSTL_VERSION}`,
+    `Version: v${CURRENT_VERSION}`
+  ];
 
-  commands.command('!cam', (text: string, args: string[]) => {
-    print(text)
-    if (args.length === 0) {
-      DisplayTextToPlayer(GetLocalPlayer(), 0, 0, `Please use this command like '!cam <distance>' e.g. '!cam 1280'.\nDefault value is 1650`)
-    } else {
-      print('zoom')
-      
-    }
-  })
-
-  print(bj_MAX_PLAYER_SLOTS)
+  let q = new Quest()
+  q.setIcon(Icons.PhoenixEgg)
+  q.setDescription('For any feedback feel free to email me\nzebestforevka@gmail.com or t.me/forevka')
+  q.setTitle('Map build info')
+  q.completed = true
+  BUILD_INFO.forEach(x => q.addItem(x.trim()))
+  
 
   let unitItemsView = UnitItemsView.Instance
 
-  
+  DisplayDamage.Init()  
+
+  speedUpAOESpell()
 
   new Timer().start(0.0, false, () => {
 
-    /*unitItemsView.addUnit(FourCC("Hamg"))
+    unitItemsView.addUnit(FourCC("Hamg"))
     unitItemsView.addUnit(FourCC("Hblm"))
     unitItemsView.addUnit(FourCC("Hmkg"))
-    unitItemsView.addUnit(FourCC("Hpal"))*/
+    unitItemsView.addUnit(FourCC("Hpal"))
 
     unitItemsView.addUnit(Units.Human.Footman)
     unitItemsView.addUnit(Units.Human.Rifleman)

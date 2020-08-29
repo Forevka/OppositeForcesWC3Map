@@ -1,4 +1,5 @@
 export const Units = {
+    Dummy: FourCC('h003'), // DUMMY UNIT FOR ABILITY have invis and locust
     SpawnBattleTag: FourCC('n000'),
     SpawnRune: FourCC('n001'),
 
@@ -95,3 +96,10 @@ export const Coords = {
         y: -3352,
     },
 }
+
+let path = 'ReplaceableTextures\\CommandButtons\\'
+export const Icons = {
+    PhoenixEgg: path + 'BTNPhoenixEgg.blp'
+}
+
+export const CURRENT_VERSION = '0.0.1'
