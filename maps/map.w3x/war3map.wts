@@ -422,3 +422,93 @@ STRING 82
 +35% movement speed units in range
 }
 
+STRING 83
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Kill income 
+}
+
+STRING 84
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 85
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 86
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 87
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 88
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Hotkey (Hotkey)
+{
+G
+}
+
+STRING 89
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Kill income 2
+}
+
+STRING 90
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Kill income 3
+}
+
+STRING 91
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Kill income 4
+}
+
+STRING 92
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Name (Name)
+{
+Kill income 5
+}
+
+STRING 100
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Gives you 8 gold for every kill|n|cff808080Upgrade time 30 sec|r
+}
+
+STRING 107
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Gives you 12 gold for every kill|n|cff808080Upgrade time 40 sec|r
+}
+
+STRING 108
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Gives you 15 gold for every kill|n|cff808080Upgrade time 50 sec|r
+}
+
+STRING 109
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Gives you 19 gold for every kill|n|cff808080Upgrade time 60 sec|r
+}
+
+STRING 110
+// Upgrades: R002 (Улучшенные топоры,Улучшенные пилы), Tip (Tooltip)
+{
+Gives you 25 gold for every kill|n|cff808080Upgrade time 70 sec|r
+}
+

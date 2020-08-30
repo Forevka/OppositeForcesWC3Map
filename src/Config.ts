@@ -48,6 +48,7 @@ function UpgradeOffset(offset: number) {
 export const Upgrades = {
     GoldIncome: UpgradeOffset(0),
     WoodIncome: UpgradeOffset(1),
+    KillIncome: UpgradeOffset(2),
 }
 
 export const UpgradesIncomeEffectsByLvl = {
@@ -65,6 +66,14 @@ export const UpgradesIncomeEffectsByLvl = {
         3: 100,
         4: 120,
         5: 150,
+    },
+    Kill: {
+        0: 5,
+        1: 8,
+        2: 12,
+        3: 15,
+        4: 19,
+        5: 25,
     },
 }
 

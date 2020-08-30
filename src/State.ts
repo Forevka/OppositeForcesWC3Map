@@ -4,6 +4,8 @@ export interface UserState {
         Wood: number;
         GoldLvl: number;
         WoodLvl: number;
+        KillIncome: number;
+        KillIncomeLvl: number;
     }
 }
 
@@ -17,21 +19,8 @@ for (let i = 0; i < bj_MAX_PLAYER_SLOTS; i++) {
             Wood: 15,
             GoldLvl: 0,
             WoodLvl: 0,
+            KillIncome: 5,
+            KillIncomeLvl: 0,
         }
     }
 }
-/*
-export const State = {
-    FTeam: {
-        Income: {
-            Gold: 10,
-            Wood: 5,
-        },
-    },
-    STeam: {
-        Income: {
-            Gold: 10,
-            Wood: 5,
-        },
-    },
-}*/
