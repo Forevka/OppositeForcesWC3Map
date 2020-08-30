@@ -1,7 +1,7 @@
-import { Timer, Unit, Trigger, Camera, Quest } from "w3ts";
+import { Timer, Unit, Trigger, Camera, Quest, MapPlayer } from "w3ts";
 import { Players } from "w3ts/globals";
 import { addScriptHook, W3TS_HOOK } from "w3ts/hooks";
-import { Units, Coords, Icons, CURRENT_VERSION } from "Config";
+import { Units, Coords, Icons, CURRENT_VERSION, UnitsByTier } from "Config";
 import { State } from "State";
 import { PlayerForce } from "Utils";
 import { IncomeView } from "View/IncomeView";
@@ -14,6 +14,7 @@ import { DisplayDamage } from "System/DisplayDamage";
 import { speedUpAOESpell } from "Spells/AOE/SpeedUp";
 import { BattleIndexer } from "Indexer/BattleIndexer";
 import { IncomeOnKill } from "System/IncomeOnKill";
+import { ChooseRace } from "System/ChooseRace";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -61,7 +62,6 @@ function tsMain() {
   const incomeView = new IncomeView()
   const incomeLogic = new IncomeLogic(incomeView)
 
-  const upgradeLogic = new UpgradesLogic()
   const battleIndexer = BattleIndexer.Init()
   const incomeOnKill = IncomeOnKill.Init()
 
@@ -69,6 +69,16 @@ function tsMain() {
     incomeView.init()
     incomeView.update(10)
   })
+
+  // get back shared unit control for 5 - yellow player(PC)
+  MapPlayer.fromIndex(4).setAlliance(MapPlayer.fromIndex(0), ALLIANCE_SHARED_CONTROL, false) // red
+  MapPlayer.fromIndex(4).setAlliance(MapPlayer.fromIndex(2), ALLIANCE_SHARED_CONTROL, false) // teal
+
+  // also for 6 player(PC) orange
+  MapPlayer.fromIndex(5).setAlliance(MapPlayer.fromIndex(1), ALLIANCE_SHARED_CONTROL, false) // blue
+  MapPlayer.fromIndex(5).setAlliance(MapPlayer.fromIndex(3), ALLIANCE_SHARED_CONTROL, false) // purple
+
+  ClearTextMessages()
 
   const commands = new Commands()
   commands.registerCommands()
@@ -89,14 +99,21 @@ function tsMain() {
   
 
   let unitItemsView = UnitItemsView.Instance
+  const chooseRace = new ChooseRace(unitItemsView)
+  const upgradeLogic = new UpgradesLogic(unitItemsView)
 
   DisplayDamage.Init()  
+
 
   speedUpAOESpell()
 
   new Timer().start(0.0, false, () => {
 
-    unitItemsView.addUnit(FourCC("Hamg"))
+    UnitsByTier.get(1000).get(0).forEach((x) => {
+      unitItemsView.addUnit(x)
+    })
+
+    /*unitItemsView.addUnit(FourCC("Hamg"))
     unitItemsView.addUnit(FourCC("Hblm"))
     unitItemsView.addUnit(FourCC("Hmkg"))
     unitItemsView.addUnit(FourCC("Hpal"))
@@ -127,7 +144,7 @@ function tsMain() {
     unitItemsView.addUnit(Units.Undead.Cryptfiend)
     unitItemsView.addUnit(Units.Undead.Abomination)
     unitItemsView.addUnit(Units.Undead.Banshe)
-    unitItemsView.addUnit(Units.Undead.Necromant)
+    unitItemsView.addUnit(Units.Undead.Necromant)*/
 
     /*unitItemsView.addItem(FourCC("ckng"))
     unitItemsView.addItem(FourCC("modt"))
@@ -171,6 +188,7 @@ function tsMain() {
     unitItemsView.addItem(FourCC("mnst"))
     unitItemsView.addItem(FourCC("belv"))
     unitItemsView.addItem(FourCC("bgst"))*/
+
     unitItemsView.addItem(FourCC("ciri"))
     unitItemsView.addItem(FourCC("lhst"))
     unitItemsView.addItem(FourCC("afac"))

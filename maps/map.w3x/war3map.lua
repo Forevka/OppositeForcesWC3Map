@@ -528,6 +528,7 @@ function CreateBuildingsForPlayer0()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), -3456.0, 3072.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1984.0, 3008.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), -1792.0, 3648.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h004"), 5440.0, 2560.0, 270.000, FourCC("h004"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 896.0, 1152.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 320.0, 1984.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 384.0, 3136.0, 270.000, FourCC("n002"))
@@ -560,7 +561,7 @@ function CreateUnitsForPlayer0()
     local unitID
     local t
     local life
-    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1502.1, 2232.3, 330.281, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("nban"), 1522.0, 2289.8, 270.000, FourCC("nban"))
 end
 
 function CreateBuildingsForPlayer1()
@@ -613,6 +614,7 @@ function CreateBuildingsForPlayer1()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1984.0, -1728.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, -1088.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, -2880.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h004"), 4928.0, -2560.0, 270.000, FourCC("h004"))
 end
 
 function CreateUnitsForPlayer1()
@@ -621,7 +623,7 @@ function CreateUnitsForPlayer1()
     local unitID
     local t
     local life
-    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1391.8, -2358.3, 330.281, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("nban"), 1406.6, -2246.6, 90.000, FourCC("nban"))
 end
 
 function CreateBuildingsForPlayer2()
@@ -633,6 +635,7 @@ function CreateBuildingsForPlayer2()
     u = BlzCreateUnitWithSkin(p, FourCC("h001"), 4352.0, 896.0, 270.000, FourCC("h001"))
     u = BlzCreateUnitWithSkin(p, FourCC("h000"), 5888.0, 1536.0, 270.000, FourCC("h000"))
     u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5376.0, 768.0, 270.000, FourCC("h002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h004"), 5440.0, 1984.0, 270.000, FourCC("h004"))
 end
 
 function CreateBuildingsForPlayer3()
@@ -644,24 +647,7 @@ function CreateBuildingsForPlayer3()
     u = BlzCreateUnitWithSkin(p, FourCC("h001"), 4352.0, -512.0, 270.000, FourCC("h001"))
     u = BlzCreateUnitWithSkin(p, FourCC("h000"), 6272.0, -768.0, 270.000, FourCC("h000"))
     u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5376.0, -768.0, 270.000, FourCC("h002"))
-end
-
-function CreateBuildingsForPlayer4()
-    local p = Player(4)
-    local u
-    local unitID
-    local t
-    local life
-    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2624.0, 3456.0, 270.000, FourCC("n004"))
-end
-
-function CreateBuildingsForPlayer5()
-    local p = Player(5)
-    local u
-    local unitID
-    local t
-    local life
-    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2560.0, -3520.0, 270.000, FourCC("n004"))
+    u = BlzCreateUnitWithSkin(p, FourCC("h004"), 5376.0, -1728.0, 270.000, FourCC("h004"))
 end
 
 function CreateBuildingsForPlayer6()
@@ -671,6 +657,7 @@ function CreateBuildingsForPlayer6()
     local t
     local life
     u = BlzCreateUnitWithSkin(p, FourCC("n000"), 1504.0, 2720.0, 270.000, FourCC("n000"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2624.0, 3456.0, 270.000, FourCC("n004"))
 end
 
 function CreateBuildingsForPlayer7()
@@ -680,6 +667,7 @@ function CreateBuildingsForPlayer7()
     local t
     local life
     u = BlzCreateUnitWithSkin(p, FourCC("n000"), 1376.0, -2784.0, 270.000, FourCC("n000"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n004"), -2560.0, -3520.0, 270.000, FourCC("n004"))
 end
 
 function CreateNeutralPassiveBuildings()
@@ -727,8 +715,6 @@ function CreatePlayerBuildings()
     CreateBuildingsForPlayer1()
     CreateBuildingsForPlayer2()
     CreateBuildingsForPlayer3()
-    CreateBuildingsForPlayer4()
-    CreateBuildingsForPlayer5()
     CreateBuildingsForPlayer6()
     CreateBuildingsForPlayer7()
 end

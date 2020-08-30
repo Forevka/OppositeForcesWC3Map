@@ -512,3 +512,339 @@ STRING 110
 Gives you 25 gold for every kill|n|cff808080Upgrade time 70 sec|r
 }
 
+STRING 113
+// Units: h004 (Embassy T0), Ubertip (Tooltip - Extended)
+{
+Gives you ability to make a contract with different races
+}
+
+STRING 115
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 116
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 118
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T2 human units:|nPriest|nSorcer|nAntimage
+}
+
+STRING 119
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T3 human units:|nKnight
+}
+
+STRING 122
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T2 human contract
+}
+
+STRING 123
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T3 human contract
+}
+
+STRING 124
+// Units: h005 (Human Embassy), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 125
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 126
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 127
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T2 human contract
+}
+
+STRING 128
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 129
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 131
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T2 human contract
+}
+
+STRING 132
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T3 human contract
+}
+
+STRING 134
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T2 human units:|nPriest|nSorcer|nAntimage
+}
+
+STRING 135
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T3 human units:|nKnight
+}
+
+STRING 136
+// Upgrades: R004 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 137
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 138
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 139
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T3 human contract
+}
+
+STRING 140
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 141
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 143
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T2 human contract
+}
+
+STRING 144
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T3 human contract
+}
+
+STRING 146
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T2 human units:|nPriest|nSorcer|nAntimage
+}
+
+STRING 147
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T3 human units:|nKnight
+}
+
+STRING 148
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 149
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 150
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 151
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T2 human units:|nPriest|nSorcer|nAntimage
+}
+
+STRING 152
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T3 human contract
+}
+
+STRING 153
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T3 human units:|nKnight
+}
+
+STRING 154
+// Upgrades: R005 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T3
+}
+
+STRING 156
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with humans to T2
+}
+
+STRING 159
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T2 human contract
+}
+
+STRING 161
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T2 human units:|nPriest|nSorcer|nAntimage
+}
+
+STRING 162
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T3 human units:|nKnight
+}
+
+STRING 163
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 164
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 165
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 166
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with orc to T2
+}
+
+STRING 168
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T2 orc contract
+}
+
+STRING 171
+// Upgrades: R007 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T2 orc units:|nRaider|nShaman|nDoctor
+}
+
+STRING 174
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Hotkey (Hotkey)
+{
+H
+}
+
+STRING 177
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Name (Name)
+{
+Upgrade contract with orc to T3
+}
+
+STRING 180
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Tip (Tooltip)
+{
+T3 orc contract
+}
+
+STRING 183
+// Upgrades: R008 (Железные мечи,Стальные мечи,Мифриловые меч), Ubertip (Tooltip - Extended)
+{
+This upgrade open ability to buy T3 orc units:|nKodo
+}
+
+STRING 189
+// Units: h004 (Embassy T0), Name (Name)
+{
+Embassy T0
+}
+
+STRING 192
+// Units: h005 (Human Embassy), Tip (Tooltip - Basic)
+{
+Make contract with human race
+}
+
+STRING 193
+// Units: h005 (Human Embassy), Ubertip (Tooltip - Extended)
+{
+Gives you ability to own human race units
+}
+
+STRING 194
+// Units: h006 (Orc Embassy), Name (Name)
+{
+Orc Embassy
+}
+
+STRING 197
+// Units: h005 (Human Embassy), Name (Name)
+{
+Human Embassy
+}
+
+STRING 198
+// Units: h006 (Orc Embassy), Tip (Tooltip - Basic)
+{
+Make contract with orc race
+}
+
+STRING 199
+// Units: h006 (Orc Embassy), Ubertip (Tooltip - Extended)
+{
+Gives you ability to own orc race units
+}
+
+STRING 200
+// Units: h006 (Orc Embassy), Hotkey (Hotkey)
+{
+O
+}
+

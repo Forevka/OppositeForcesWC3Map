@@ -1,12 +1,16 @@
-import { Trigger } from "w3ts/index"
-import { Upgrades, UpgradesIncomeEffectsByLvl } from "Config"
+import { Trigger} from "w3ts/index"
+import { Upgrades, UpgradesIncomeEffectsByLvl, UnitsByTier } from "Config"
 import { UserState, State } from "State"
 import { Color } from "Utils"
+import { UnitItemsView } from "View/UnitItemsView"
 
 export class UpgradesLogic {
     private _callbackMap: Map<number, (player: player) => void>
+    private _unitItemsView: UnitItemsView;
     
-    constructor() {
+    constructor(unitItemsView: UnitItemsView) {
+        this._unitItemsView = unitItemsView
+
         let trg = new Trigger()
         trg.registerAnyUnitEvent(EVENT_PLAYER_UNIT_RESEARCH_FINISH)
         trg.addAction(() => {
@@ -19,17 +23,32 @@ export class UpgradesLogic {
     private setCallbacks() {
         this._callbackMap.set(Upgrades.GoldIncome, this.upgradedGoldIncome)
         this._callbackMap.set(Upgrades.WoodIncome, this.upgradedWoodIncome)
-        this._callbackMap.set(FourCC('R002'), this.upgradedKillIncome)
+        this._callbackMap.set(Upgrades.KillIncome, this.upgradedKillIncome)
     }
 
     private onUpgrade() {
         let upgId = GetResearched()
+        let player = GetTriggerPlayer()
         if (this._callbackMap.has(upgId)) {
-            let player = GetTriggerPlayer()
             this._callbackMap.get(upgId)(player)
+        } else if (State[GetPlayerId(player)].Race.TierUpgrades.has(upgId)) {
+            this.upgradedMainTier(player, upgId)
         }
         
-        //print(`researched ${upgId}`)
+        print(`researched ${upgId}`)
+    }
+
+    private upgradedMainTier(player: player, upgId: number) {
+        let state: UserState = State[GetPlayerId(player)]
+        let upgradedToTier = state.Race.TierUpgrades.get(upgId)
+        state.Tier = upgradedToTier
+
+        UnitsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
+            this._unitItemsView.addUnit(x)
+        })
+        this._unitItemsView.refresh()
+
+        DisplayTextToPlayer(Player(GetPlayerId(player)), 0, 0, `You upgraded your main contract to ${upgradedToTier} tier.\nNow you able to train new units`)
     }
 
     private upgradedKillIncome(player: player) {
