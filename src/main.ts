@@ -12,6 +12,8 @@ import { SpawnSystem } from "System/SpawnSystem";
 import { UpgradesLogic } from "System/Upgrades";
 import { DisplayDamage } from "System/DisplayDamage";
 import { speedUpAOESpell } from "Spells/AOE/SpeedUp";
+import { BattleIndexer } from "Indexer/BattleIndexer";
+import { IncomeOnKill } from "System/IncomeOnKill";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -60,6 +62,8 @@ function tsMain() {
   const incomeLogic = new IncomeLogic(incomeView)
 
   const upgradeLogic = new UpgradesLogic()
+  const battleIndexer = BattleIndexer.Init()
+  const incomeOnKill = IncomeOnKill.Init()
 
   new Timer().start(0.5, false, () => {
     incomeView.init()

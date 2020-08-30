@@ -560,9 +560,7 @@ function CreateUnitsForPlayer0()
     local unitID
     local t
     local life
-    u = BlzCreateUnitWithSkin(p, FourCC("hrif"), 1520.3, 2420.0, 3.142, FourCC("hrif"))
-    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1375.8, 2218.1, 330.281, FourCC("hfoo"))
-    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1693.8, 2207.1, 82.752, FourCC("hfoo"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1502.1, 2232.3, 330.281, FourCC("hfoo"))
 end
 
 function CreateBuildingsForPlayer1()
@@ -623,9 +621,7 @@ function CreateUnitsForPlayer1()
     local unitID
     local t
     local life
-    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1183.9, -2334.3, 330.281, FourCC("hfoo"))
-    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1501.8, -2345.2, 82.752, FourCC("hfoo"))
-    u = BlzCreateUnitWithSkin(p, FourCC("hrif"), 1364.5, -2577.9, 3.142, FourCC("hrif"))
+    u = BlzCreateUnitWithSkin(p, FourCC("hfoo"), 1391.8, -2358.3, 330.281, FourCC("hfoo"))
 end
 
 function CreateBuildingsForPlayer2()

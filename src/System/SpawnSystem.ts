@@ -1,5 +1,6 @@
 import { Timer, Unit, Trigger, Camera, Group } from "w3ts";
 import { Units, Coords } from "Config";
+import { BattleIndexer } from "Indexer/BattleIndexer";
 
 export class SpawnSystem {
     private _time: number;
@@ -76,7 +77,7 @@ export class SpawnSystem {
 
                 controlGroup = this._sTeamUnitGroup
             }
-
+            const battleIndexer = BattleIndexer.Instance
             const loc = Location(xxSpawn, yySpawn);
             const units = GetUnitsInRangeOfLocAll(rad, loc);
             const size = BlzGroupGetSize(units);
@@ -91,17 +92,23 @@ export class SpawnSystem {
                     continue;
                 }
                 
-                print(`Unit: ${unit.name}; Team: ${team}`);
+                //print(`Unit: ${unit.name}; Team: ${team}`);
                 let newUnit = Unit.fromHandle(CreateUnit(Player(controlPlayer), unit.typeId, xxBattle + relativeLocX, yyBattle + relativeLocY, facing))
                 //newUnit.getField('qe')
+                newUnit.color = GetPlayerColor(unit.owner.handle)
+                newUnit.name = I2S(newUnit.id)
                 controlGroup.addUnit(newUnit)
+                battleIndexer.AddUnit(newUnit.id, {
+                    owner: unit.owner.id, 
+                    attackerId: null
+                })
             }
 
-            print(`control group ${team} len ${controlGroup.size}`)
+            //print(`control group ${team} len ${controlGroup.size}`)
             //controlGroup.orderImmediate("Stop")
             controlGroup.orderCoords("Attack", xxToAttack, yyToAttack)
             controlGroup.clear()
-        },print)
+        }, print)
     }
 
     private spawn() {

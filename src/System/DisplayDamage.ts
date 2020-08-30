@@ -1,4 +1,6 @@
 import { Trigger, Unit } from "w3ts/index";
+import { BattleIndexer } from "Indexer/BattleIndexer";
+import { TextTagWithFog } from "TextTag/TextTagWithFog";
 
 let Color: string[] = [];
 
@@ -24,38 +26,19 @@ export class DisplayDamage {
         let attachToUnit = new Trigger()
 
         displayTrigger.addAction(() => {
-            let uD = GetEventDamageSource();
-            let uT = GetTriggerUnit();
-            let pD = GetOwningPlayer(uD);
-            let pT = GetOwningPlayer(uT);
-            let tt = CreateTextTag();
-            let d = R2I(GetEventDamage() + 0.5);
-            let s = Color[GetPlayerId(pD)] + "-" + I2S(d) + "|r";
+            let damager = GetEventDamageSource();
+            let damaged = GetTriggerUnit();
+            let damage = R2I(GetEventDamage() + 0.5);
+
+            const battleIndexer = BattleIndexer.Instance
+            const damagedUnitData = battleIndexer.GetUnitData(GetHandleId(damaged))
+            const damagerUnitData = battleIndexer.GetUnitData(GetHandleId(damager))
+
+            let text = Color[damagerUnitData.owner] + "-" + I2S(damage) + "|r";
             
-            /* text tag*/
-            SetTextTagText(tt,s, 12 * 0.0023);
-            SetTextTagPosUnit(tt, uT, 20.);
-            SetTextTagVelocity(tt, .05325*Cos(1.570795), .05325*Sin(1.570795));
-            SetTextTagPermanent(tt, false);
-            SetTextTagLifespan(tt, 1.5);
-            SetTextTagFadepoint(tt, 0.);
-            
-            /* hide on fog of war */
-            SetTextTagVisibility(tt, false);
-            for (let i=0; i<16; i++) {
-                if (GetPlayerController(Player(i)) == MAP_CONTROL_USER && GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING){
-                    if (IsUnitVisible(uD, Player(i)) && Player(i) == GetLocalPlayer()) {
-                        SetTextTagVisibility(tt, true);
-                    }
-                }
-            }
-    
-            /* leaks */
-            uD = null;
-            uT = null;
-            pD = null;
-            pT = null;
-            tt = null;
+            damagedUnitData.attackerId = GetHandleId(damager)
+
+            TextTagWithFog(text, damaged, damager)
         })
 
         let world = CreateRegion()
