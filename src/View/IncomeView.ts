@@ -1,53 +1,85 @@
 import { State, UserState } from "State";
+import { Players } from "w3ts/globals/index";
 
 export class IncomeView {
     private _userState: UserState;
 
-    private _multiBoard: multiboard;
-    private _multiFrame: framehandle;
-    private _multiContainer: framehandle;
-    private _itemGoldLabel: multiboarditem;
-    private _itemWoodLabel: multiboarditem;
-    private _itemGoldValue: multiboarditem;
-    private _itemWoodValue: multiboarditem;
+    private _multiBoards: multiboard[];
+    private _multiFrames: framehandle[];
+    private _multiContainers: framehandle[];
+    private _itemGoldLabels: multiboarditem[];
+    private _itemWoodLabels: multiboarditem[];
+    private _itemGoldValues: multiboarditem[];
+    private _itemWoodValues: multiboarditem[];
 
     public constructor() {
-        /*if (PlayerForce() === 1) {
-            this._incomeState = State.FTeam.Income
-        } else {
-            this._incomeState = State.STeam.Income
-        }*/
-        this._userState = State[GetPlayerId(GetLocalPlayer())]
+        this._multiBoards = []
+        this._multiContainers = []
+        this._multiFrames = []
+
+        this._itemWoodLabels = []
+        this._itemWoodValues = []
+
+        this._itemGoldLabels = []
+        this._itemGoldValues = []
     }
 
     public init() {
-        this._multiBoard = CreateMultiboardBJ(2, 2, "Income")
-        this._multiFrame = BlzGetFrameByName("Multiboard", 0)
-        this._multiContainer = BlzGetFrameByName("MultiboardListContainer",0)
+        let index = 0
+        Players.forEach(x => {
+            //print(index)
+            this.createTable(index)
+            index += 1
+        })
 
-        MultiboardSetItemsStyle(this._multiBoard, true, false)
-        MultiboardSetItemsWidth(this._multiBoard, 0.10)
-        MultiboardMinimize(this._multiBoard, false)
+        print(this._multiBoards.length)
+        print(this._multiFrames.length)
+    }
+
+    private createTable(index: number) {
+        xpcall(() => {
+            this._multiBoards[index] = CreateMultiboardBJ(2, 2, "Income")
+            this._multiFrames[index] = BlzGetFrameByName("Multiboard", 0)
+            this._multiContainers[index] = BlzGetFrameByName("MultiboardListContainer",0)
     
-        this._itemGoldLabel = MultiboardGetItem(this._multiBoard, 0, 0)
-        MultiboardSetItemValue(this._itemGoldLabel, 'Gold')
+            MultiboardSetItemsStyle(this._multiBoards[index], true, false)
+            MultiboardSetItemsWidth(this._multiBoards[index], 0.10)
+            MultiboardMinimize(this._multiBoards[index], false)
 
-        this._itemWoodLabel = MultiboardGetItem(this._multiBoard, 0, 1)
-        MultiboardSetItemValue(this._itemWoodLabel, 'Wood')
-
-        this._itemGoldValue = MultiboardGetItem(this._multiBoard, 1, 0)
-        this._itemWoodValue = MultiboardGetItem(this._multiBoard, 1, 1)
-
-        BlzFrameClearAllPoints(this._multiFrame)
-        BlzFrameSetPoint(this._multiFrame, FRAMEPOINT_TOP, BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), FRAMEPOINT_TOPRIGHT, 0.0, -0.05)
-        BlzFrameSetSize(this._multiFrame, 0.03, 0.03)
+            BlzFrameSetVisible(this._multiFrames[index], false)
+        
+            this._itemGoldLabels[index] = MultiboardGetItem(this._multiBoards[index], 0, 0)
+            MultiboardSetItemValue(this._itemGoldLabels[index], 'Gold')
     
-        BlzFrameSetVisible(this._multiFrame, true)
+            this._itemWoodLabels[index] = MultiboardGetItem(this._multiBoards[index], 0, 1)
+            MultiboardSetItemValue(this._itemWoodLabels[index], 'Wood')
+    
+            this._itemGoldValues[index] = MultiboardGetItem(this._multiBoards[index], 1, 0)
+            this._itemWoodValues[index] = MultiboardGetItem(this._multiBoards[index], 1, 1)
+    
+            BlzFrameClearAllPoints(this._multiFrames[index])
+            BlzFrameSetPoint(this._multiFrames[index], FRAMEPOINT_TOP, BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), FRAMEPOINT_TOPRIGHT, 0.0, -0.05)
+            BlzFrameSetSize(this._multiFrames[index], 0.03, 0.03)
+        
+            if (Player(index) == GetLocalPlayer())
+            {
+                BlzFrameSetVisible(this._multiFrames[index], true)
+            }
+        }, print)
     }
 
     public update(secondLeft: number) {
-        MultiboardSetItemValue(this._itemGoldValue, `${this._userState.Income.Gold}`)
-        MultiboardSetItemValue(this._itemWoodValue, `${this._userState.Income.Wood}`)
-        MultiboardSetTitleText(this._multiBoard, `Income in ${secondLeft} for ${GetPlayerId(GetLocalPlayer())}`)
+        let index = 0
+        Players.forEach(x => {
+            if (GetPlayerId(GetLocalPlayer()) == index) {
+                let state = State[index]
+                //print(`Income in ${secondLeft} for ${index}`)
+                BlzFrameSetVisible(this._multiFrames[index], true)
+                MultiboardSetItemValue(this._itemGoldValues[index], `${state.Income.Gold}`)
+                MultiboardSetItemValue(this._itemWoodValues[index], `${state.Income.Wood}`)
+                MultiboardSetTitleText(this._multiBoards[index], `Income in ${secondLeft} for ${index}`)
+            }
+            index += 1
+        })
     }
 }

@@ -48,10 +48,10 @@ export class Commands {
 
     public registerCommands() {
         this.command('cam', (text: string, args: string[]) => {
-            if (args.length === 0) {
-                DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, `Please use this command like '|cffffff00!cam|r <distance>' e.g. '!cam 1280'.\nDefault value is 1650, minimal 500 maximal 4000`)
-            } else {
-                if (GetLocalPlayer() == GetTriggerPlayer()) {
+            if (GetLocalPlayer() == GetTriggerPlayer()) {
+                if (args.length === 0) {
+                    DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, `Please use this command like '|cffffff00!cam|r <distance>' e.g. '!cam 1280'.\nDefault value is 1650, minimal 500 maximal 4000`)
+                } else {
                     let zoom = S2I(args[0])
                     if (zoom >= 500 && zoom <= 4000) {
                         SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, zoom, 1); 
@@ -73,10 +73,12 @@ export class Commands {
         this.synonym('cam', 'сфь')
 
         this.command('unit', (text: string, args: string[]) => {
-            if (args.length === 0) {
-                DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, `Example: -unit hfoo\nWill spawn footman at start position`)
-            } else {
-                CreateUnit(GetTriggerPlayer(), FourCC(args[0]), GetPlayerStartLocationX(GetLocalPlayer()), GetPlayerStartLocationY(GetLocalPlayer()), 0)
+            if (GetLocalPlayer() == GetTriggerPlayer()) {
+                if (args.length === 0) {
+                    DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, `Example: -unit hfoo\nWill spawn footman at start position`)
+                } else {
+                    CreateUnit(GetTriggerPlayer(), FourCC(args[0]), GetPlayerStartLocationX(GetLocalPlayer()), GetPlayerStartLocationY(GetLocalPlayer()), 0)
+                }
             }
         })
 
@@ -84,12 +86,13 @@ export class Commands {
         this.synonym('unit', 'у')
 
         this.command('state', (text: string, args: string[]) => {
-            let desc = "Current state:"
-            State.forEach(x => {
-                desc += `\nGold: ${x.Income.Gold}, Wood: ${x.Income.Wood}, GL: ${x.Income.GoldLvl}, WL: ${x.Income.WoodLvl}`
-            })
             if (GetLocalPlayer() == GetTriggerPlayer()) {
-                DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, desc);
+                if (args.length == 1) {
+                    let id = S2I(args[0])
+                    let desc = "Current state:"
+                    desc += `\nGold: ${State[id].Income.Gold}, Wood: ${State[id].Income.Wood}, GL: ${State[id].Income.GoldLvl}, WL: ${State[id].Income.WoodLvl}`
+                    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 60, desc);
+                }
             }
         })
     }
