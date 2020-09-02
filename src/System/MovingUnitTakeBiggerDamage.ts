@@ -1,5 +1,4 @@
 import { Trigger, Unit } from "w3ts/index";
-import { UnitItemsView } from "View/UnitItemsView";
 
 export class MovingUnitTakesBiggerDamage {
     public static init() {

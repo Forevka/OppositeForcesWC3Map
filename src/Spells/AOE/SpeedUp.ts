@@ -3,8 +3,8 @@ import { SpellAOEBase } from "./AOEBase";
 export function speedUpAOESpell() {
     new SpellAOEBase({
         TriggerSpellId: FourCC('A003'),
-        DummySpellId: FourCC('A002'),
-        DummySpellOrder: 'bloodlust',
+        DummySpellId: FourCC('A009'),
+        DummySpellOrder: 'cripple',
         Range: 350,//AOE RANGE FROM EDITOR
     })
     .Init()

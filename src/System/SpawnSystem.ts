@@ -77,7 +77,7 @@ export class SpawnSystem {
 
                 controlGroup = this._sTeamUnitGroup
             }
-            const battleIndexer = BattleIndexer.Instance
+            //const battleIndexer = BattleIndexer.Instance
             const loc = Location(xxSpawn, yySpawn);
             const units = GetUnitsInRangeOfLocAll(rad, loc);
             const size = BlzGroupGetSize(units);
@@ -97,16 +97,18 @@ export class SpawnSystem {
                 //newUnit.getField('qe')
                 newUnit.color = GetPlayerColor(unit.owner.handle)
                 //newUnit.name = I2S(newUnit.id)
-                controlGroup.addUnit(newUnit)
-                battleIndexer.AddUnit(newUnit.id, {
+                //controlGroup.addUnit(newUnit)
+                /*battleIndexer.AddUnit(newUnit.id, {
                     owner: unit.owner.id, 
                     attackerId: null
-                })
+                })*/
+                //IssuePointOrderLocBJ(udg_AOEDamageSource, "attack", GetRectCenter(GetPlayableMapRect()))
+                newUnit.issueOrderAt("attack", xxToAttack, yyToAttack)
             }
 
             //print(`control group ${team} len ${controlGroup.size}`)
             //controlGroup.orderImmediate("Stop")
-            controlGroup.orderCoords("Attack", xxToAttack, yyToAttack)
+            //controlGroup.orderCoords("Attack", xxToAttack, yyToAttack)
             controlGroup.clear()
         }, print)
     }
