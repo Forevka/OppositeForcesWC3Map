@@ -32,26 +32,25 @@ export class UpgradesLogic {
         let player = GetTriggerPlayer()
         print(`Upgrade by ${GetPlayerId(player)} ${GetPlayerName(player)} ${upgId}`)// GetTriggerPlayer()
         if (this._callbackMap.has(upgId)) {
-            print('HAS UPG')
             let a = this._callbackMap.get(upgId)
-            print(a)
             a()
         } else if (State[GetPlayerId(player)].Race.TierUpgrades.has(upgId)) {
-            this.upgradedMainTier(player, upgId)
+            this.upgradedMainTier(upgId)
         }
         
         print(`researched ${upgId}`)
     }
 
-    private upgradedMainTier(player: player, upgId: number) {
+    private upgradedMainTier(upgId: number) {
+        let player = GetTriggerPlayer()
         let state: UserState = State[GetPlayerId(player)]
         let upgradedToTier = state.Race.TierUpgrades.get(upgId)
         state.Tier = upgradedToTier
 
-        /*UnitsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
-            this._unitItemsView.addUnit(x)
+        UnitsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
+            this._unitItemsView.addUnit(GetPlayerId(player), x)
         })
-        this._unitItemsView.refresh()*/
+        this._unitItemsView.refresh(GetPlayerId(player))
 
         DisplayTextToPlayer(Player(GetPlayerId(player)), 0, 0, `You upgraded your main contract to ${upgradedToTier} tier.\nNow you able to train new units`)
     }
@@ -69,20 +68,13 @@ export class UpgradesLogic {
 
     private upgradedGoldIncome() {
         let player = GetTriggerPlayer()
-        print(`GOLD INCOME ${GetPlayerId(GetTriggerPlayer())}`)
-        //if (GetPlayerId(GetLocalPlayer()) == GetPlayerId(player)) {
-        print(`local`)
         let state: UserState = State[GetPlayerId(player)]
-        print(state)
         let upgradeIncome = UpgradesIncomeEffectsByLvl.Gold[state.Income.GoldLvl]
-        print(`upgradeIncome ${upgradeIncome}`)
         state.Income.GoldLvl += 1
         let oldIncome = state.Income.Gold
-        print(`oldIncome ${oldIncome}`)
         state.Income.Gold += upgradeIncome
 
         DisplayTextToPlayer(Player(GetPlayerId(player)), 0, 0, `${Color.YELLOW}Gold|r income upgraded from ${Color.YELLOW}${oldIncome}|r to ${Color.YELLOW}${state.Income.Gold}|r`)
-        //}
     }
 
 
