@@ -848,3 +848,69 @@ STRING 200
 O
 }
 
+STRING 201
+// Units: h003 (DUMMY), Name (Name)
+{
+DUMMY
+}
+
+STRING 202
+// Units: h007 (CustomFootman), Name (Name)
+{
+CustomFootman
+}
+
+STRING 203
+// Abilities: A001 (CustomHumanDefence), Name (Name)
+{
+CustomHumanDefence
+}
+
+STRING 204
+// Units: h008 (CustomRifleman), Name (Name)
+{
+CustomRifleman
+}
+
+STRING 205
+// Abilities: A004 (CustomHumanBarrageArcher), Name (Name)
+{
+CustomHumanBarrageArcher
+}
+
+STRING 206
+// Abilities: A005 (CustomHumanCritRifleman), Name (Name)
+{
+CustomHumanCritRifleman
+}
+
+STRING 207
+// Units: n006 (CustomArcher), Name (Name)
+{
+CustomArcher
+}
+
+STRING 208
+// Abilities: A007 (CustomUnitRegeneration), Name (Name)
+{
+CustomUnitRegeneration
+}
+
+STRING 209
+// Buffs/Effects: B001 (), Buffubertip (Tooltip - Extended)
+{
+Health regeneration of this unit increased
+}
+
+STRING 212
+// Abilities: A007 (CustomUnitRegeneration), Ubertip (Tooltip - Normal - Extended)
+{
+Increases health regen by 15hp/sec for 25 sec.
+}
+
+STRING 213
+// Abilities: A008 (CustomBlizzard), Name (Name)
+{
+CustomBlizzard
+}
+

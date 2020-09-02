@@ -31,9 +31,6 @@ export class IncomeView {
             this.createTable(index)
             index += 1
         })
-
-        print(this._multiBoards.length)
-        print(this._multiFrames.length)
     }
 
     private createTable(index: number) {
