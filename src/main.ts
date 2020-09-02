@@ -15,6 +15,7 @@ import { speedUpAOESpell } from "Spells/AOE/SpeedUp";
 import { BattleIndexer } from "Indexer/BattleIndexer";
 import { IncomeOnKill } from "System/IncomeOnKill";
 import { ChooseRace } from "System/ChooseRace";
+import { MovingUnitTakesBiggerDamage } from "System/MovingUnitTakeBiggerDamage";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -50,6 +51,8 @@ function tsMain() {
   let sTeamTextTag = CreateTextTagLocBJ('Spawn info', Location(Coords.STeamSpawn.x, Coords.STeamSpawn.y), 100, 25, 255,255,255,1)
 
   let spawnSystem = new SpawnSystem(fTeamTextTag, sTeamTextTag)
+
+  MovingUnitTakesBiggerDamage.init()
 
   /*if (PlayerForce() === 1) {
     state = State.FTeam

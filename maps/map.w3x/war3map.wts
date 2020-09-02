@@ -914,3 +914,20 @@ STRING 213
 CustomBlizzard
 }
 
+STRING 214
+{
+Ranged attacks deal 50% damage to moving targets, but are armor piercing when the target is still.
+Summoned units take 200% damage, but retaliate with the damage back at the attacker.
+The Archmage is healed when attacked by a water elemental.
+The Knight has a 50% chance to deal a 4x critical strike that pierces 50 armor.
+The Peasant deals 0 damage and attacks silently.
+The Mutant's health cannot be reduced below 1.
+Archimonde's attacks will normally kill the target, but instead heal for that amount.
+Type |cffff0000report|r in order to toggle in-depth damage analysis.
+}
+
+STRING 215
+{
+Source applied an enhanced effect with this damage.
+}
+

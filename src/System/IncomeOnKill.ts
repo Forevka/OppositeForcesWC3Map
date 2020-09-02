@@ -1,5 +1,4 @@
 import { Trigger, Unit, MapPlayer } from "w3ts/index";
-import { BattleIndexer } from "Indexer/BattleIndexer";
 import { Color } from "Utils";
 import { TextTagVisibleToAlly } from "TextTag/TextTagWithFog";
 import { State } from "State";
@@ -8,8 +7,8 @@ export class IncomeOnKill {
     private _deathTrigger: Trigger;
 
     public constructor() {
-        this._deathTrigger = new Trigger()
-        this._deathTrigger.registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+        this._deathTrigger = Trigger.fromHandle(gg_trg_Prevent_Lethal)//new Trigger()
+        //this._deathTrigger.registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     }
 
     public static Init() {
@@ -21,27 +20,17 @@ export class IncomeOnKill {
     private OnDeath() {
         this._deathTrigger.addAction(() => {
             xpcall(() => {
-                let unit = Unit.fromEvent()
-                let battleIndexer = BattleIndexer.Instance
-                let unitData = battleIndexer.GetUnitData(unit.id)
-                if (unitData != null) {
-                    //let unitRealOwner = MapPlayer.fromIndex(unitData.owner)
-                    //print(`OWNER ${unitRealOwner.name}`)
-                    let killer = battleIndexer.GetUnitData(unitData.attackerId)
-                    let killerOwner = MapPlayer.fromIndex(killer.owner)
+                let diyingUnit = Unit.fromEvent()
+                let killerUnit = Unit.fromHandle(udg_DamageEventSource)
 
-                    if (!killerOwner.isPlayerAlly(MapPlayer.fromIndex(unitData.owner))) {
-                        let killerState = State[killer.owner]
-                        let oldGold = killerOwner.getState(PLAYER_STATE_RESOURCE_GOLD)
-                        //let oldWood = killerOwner.getState(PLAYER_STATE_RESOURCE_LUMBER)
+                if (!killerUnit.owner.isPlayerAlly(diyingUnit.owner)) {
+                    let killerState = State[killerUnit.owner.id]
+                    let oldGold = killerUnit.owner.getState(PLAYER_STATE_RESOURCE_GOLD)
 
-                        killerOwner.setState(PLAYER_STATE_RESOURCE_GOLD, oldGold + killerState.Income.KillIncome)
-                        //killerOwner.setState(PLAYER_STATE_RESOURCE_GOLD, oldGold + 100)
-                        let text = `${Color.YELLOW}+${killerState.Income.KillIncome}g|r`
+                    killerUnit.owner.setState(PLAYER_STATE_RESOURCE_GOLD, oldGold + killerState.Income.KillIncome)
+                    let text = `${Color.YELLOW}+${killerState.Income.KillIncome}g|r`
 
-                        TextTagVisibleToAlly(text, unit.handle, killerOwner)
-                    }
-                    battleIndexer.DeleteUnit(unit.id)
+                    TextTagVisibleToAlly(text, diyingUnit.handle, killerUnit.owner)
                 }
             }, print)
         })

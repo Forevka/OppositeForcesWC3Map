@@ -96,7 +96,7 @@ export class SpawnSystem {
                 let newUnit = Unit.fromHandle(CreateUnit(Player(controlPlayer), unit.typeId, xxBattle + relativeLocX, yyBattle + relativeLocY, facing))
                 //newUnit.getField('qe')
                 newUnit.color = GetPlayerColor(unit.owner.handle)
-                newUnit.name = I2S(newUnit.id)
+                //newUnit.name = I2S(newUnit.id)
                 controlGroup.addUnit(newUnit)
                 battleIndexer.AddUnit(newUnit.id, {
                     owner: unit.owner.id, 
