@@ -3,7 +3,6 @@ import { Upgrades, UpgradesIncomeEffectsByLvl, UnitsByTier } from "Config"
 import { UserState, State } from "State"
 import { Color } from "Utils"
 import { UnitItemsView } from "View/UnitItemsView"
-import { Players } from "w3ts/globals/index"
 
 export class UpgradesLogic {
     private _callbackMap: Map<number, () => void>

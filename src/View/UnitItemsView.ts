@@ -97,13 +97,11 @@ export class UnitItemsView {
     }
 
     public static get Instance() {
-        let ins = UnitItemsView._instance
-
-        if (ins == null) {
-            ins = new UnitItemsView()
+        if (UnitItemsView._instance == null) {
+            UnitItemsView._instance = new UnitItemsView()
         }
 
-        return ins
+        return UnitItemsView._instance
     }
 
     public addUnit(playerId: number, id: number) {

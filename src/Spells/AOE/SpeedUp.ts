@@ -9,10 +9,7 @@ export function speedUpAOESpell() {
     })
     .Init()
     .SetAction((dummyCaster, dummyOwner, units, spellInfo) => {
-        print('WORKS')
-        print(units.forEach)
         units.forEach((unit) => {
-            print(unit.name)
             if (unit.owner.isPlayerAlly(dummyOwner)) {
                 dummyCaster.issueTargetOrder(spellInfo.DummySpellOrder, unit)
             }

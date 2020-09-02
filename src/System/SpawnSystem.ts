@@ -1,6 +1,5 @@
 import { Timer, Unit, Trigger, Camera, Group } from "w3ts";
 import { Units, Coords } from "Config";
-import { BattleIndexer } from "Indexer/BattleIndexer";
 
 export class SpawnSystem {
     private _time: number;

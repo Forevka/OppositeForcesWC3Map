@@ -24,7 +24,6 @@ export class SpellAOEBase {
             dummyCaster.y = GetLocationY(spellLocation)
 
             if (spellId == this._info.TriggerSpellId) {
-                print('spellid')  
                 dummyCaster.addAbility(this._info.DummySpellId)
                 dummyCaster.setAbilityLevel(this._info.DummySpellId, 1);
                 this._castAction(dummyCaster, dummyOwner, MyGroup.fromHandle(GetUnitsInRangeOfLocAll(this._info.Range, spellLocation)), this._info)
