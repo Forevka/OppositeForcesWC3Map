@@ -104,13 +104,19 @@ function tsMain() {
 
   DisplayDamage.Init()  
 
-
+  ///DECLARE ALL SPELLS
   speedUpAOESpell()
+  /* */
 
   new Timer().start(0.0, false, () => {
+    unitItemsView.init()
 
-    UnitsByTier.get(1000).get(0).forEach((x) => {
-      unitItemsView.addUnit(x)
+    Players.forEach((p, i) => {
+      UnitsByTier.get(1000).get(0).forEach((x) => {
+        unitItemsView.addUnit(i, x)
+      })
+
+      unitItemsView.refresh(i)
     })
 
     /*unitItemsView.addUnit(FourCC("Hamg"))
@@ -189,7 +195,7 @@ function tsMain() {
     unitItemsView.addItem(FourCC("belv"))
     unitItemsView.addItem(FourCC("bgst"))*/
 
-    unitItemsView.addItem(FourCC("ciri"))
+    /*unitItemsView.addItem(FourCC("ciri"))
     unitItemsView.addItem(FourCC("lhst"))
     unitItemsView.addItem(FourCC("afac"))
     unitItemsView.addItem(FourCC("sbch"))
@@ -204,7 +210,7 @@ function tsMain() {
     unitItemsView.addItem(FourCC("evtl"))
     unitItemsView.addItem(FourCC("penr"))
     
-    unitItemsView.refresh()
+    unitItemsView.refresh()*/
   })
 }
 

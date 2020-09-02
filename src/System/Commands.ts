@@ -91,7 +91,7 @@ export class Commands {
                     let id = S2I(args[0])
                     let desc = "Current state:"
                     desc += `\nGold: ${State[id].Income.Gold}, Wood: ${State[id].Income.Wood}, GL: ${State[id].Income.GoldLvl}, WL: ${State[id].Income.WoodLvl}`
-                    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 60, desc);
+                    DisplayTimedTextToPlayer(GetLocalPlayer(), 0, 0, 60, desc);
                 }
             }
         })

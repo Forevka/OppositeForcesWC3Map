@@ -48,10 +48,10 @@ export class UpgradesLogic {
         let upgradedToTier = state.Race.TierUpgrades.get(upgId)
         state.Tier = upgradedToTier
 
-        UnitsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
+        /*UnitsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
             this._unitItemsView.addUnit(x)
         })
-        this._unitItemsView.refresh()
+        this._unitItemsView.refresh()*/
 
         DisplayTextToPlayer(Player(GetPlayerId(player)), 0, 0, `You upgraded your main contract to ${upgradedToTier} tier.\nNow you able to train new units`)
     }

@@ -31,9 +31,9 @@ export class ChooseRace {
             print(UnitsByTier.get(playerState.Race.id).get(playerState.Tier))
             print(UnitsByTier.get(playerState.Race.id).get(playerState.Tier).length)*/
             UnitsByTier.get(playerState.Race.Id).get(playerState.Tier).forEach((x) => {
-                unitItemsView.addUnit(x)
+                unitItemsView.addUnit(player.id, x)
             })
-            unitItemsView.refresh()
+            unitItemsView.refresh(player.id)
 
             DisplayTextToPlayer(Player(player.id), 0, 0, `You signed contract with ${playerState.Race.Name}!\nNow you granted ability to train units of this race in right panel menu.`)
         })
