@@ -62,7 +62,7 @@ function tsMain() {
   const incomeView = new IncomeView()
   const incomeLogic = new IncomeLogic(incomeView)
 
-  const battleIndexer = BattleIndexer.Init()
+  //const battleIndexer = BattleIndexer.Init()
   const incomeOnKill = IncomeOnKill.Init()
 
   new Timer().start(0.5, false, () => {
@@ -102,7 +102,7 @@ function tsMain() {
   const chooseRace = new ChooseRace(unitItemsView)
   const upgradeLogic = new UpgradesLogic(unitItemsView)
 
-  DisplayDamage.Init()  
+  //DisplayDamage.Init()  
 
   ///DECLARE ALL SPELLS
   speedUpAOESpell()
