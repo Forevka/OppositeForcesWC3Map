@@ -1,9 +1,17 @@
 import { Timer, Unit, Trigger, Camera, Group } from "w3ts";
 import { Units, Coords } from "Config";
+import { SpawnConfig } from "Config/SpawnConfig";
 
 export class SpawnSystem {
     private _time: number;
     private _maxTime: number;
+
+    private _spawnIndex: number;
+    private _maxSpawnIndex: number;
+
+    private _delayBeforeStart: number;
+
+    private _roundStarted: number; //0 - not started, 1 - started
 
     private _fTeamInfoTag: texttag;
     private _sTeamInfoTag: texttag;
@@ -11,21 +19,87 @@ export class SpawnSystem {
     private _fTeamUnitGroup: Group;
     private _sTeamUnitGroup: Group;
 
+    private _currentRound: number;
+
     public constructor(fTeamInfoTag: texttag, sTeamInfoTag: texttag) {
-        this._maxTime = 20
-        this._time = this._maxTime
+        this._currentRound = -1
+        this._spawnIndex = -1
+
+        this.nextRound()
 
         this._fTeamInfoTag = fTeamInfoTag
         this._sTeamInfoTag = sTeamInfoTag
 
-        this._fTeamUnitGroup = new Group()
-        this._sTeamUnitGroup = new Group()
+        //this._fTeamUnitGroup = new Group()
+        //this._sTeamUnitGroup = new Group()
 
         new Timer().start(1.00, true, () => {
-            this.spawn()
-            SetTextTagText(this._fTeamInfoTag, `To spawn: ${this._time}`, TextTagSize2Height(25))
-            SetTextTagText(this._sTeamInfoTag, `To spawn: ${this._time}`, TextTagSize2Height(25))
+            this.roundLogic()
         })
+    }
+
+    private nextRound() {
+        print('next round')
+        this._currentRound += 1
+
+        let roundInfo = SpawnConfig.get(this._currentRound)
+        print(`round ${this._currentRound}`)
+
+        /*Count of spawns*/
+        this._spawnIndex = -1
+        this.nextSpawn()
+        this._maxSpawnIndex = roundInfo.Spawns.length
+
+        /*Delay before round start*/
+        this._delayBeforeStart = roundInfo.Delay
+
+        /*Round not started*/
+        this._roundStarted = 0
+    }
+
+    private nextSpawn() {
+        print('new spawn')
+        this._spawnIndex += 1
+        let roundInfo = SpawnConfig.get(this._currentRound)
+        /*Time between spawns*/
+        this._maxTime = roundInfo.Spawns[this._spawnIndex].Cooldown//SpawnCooldown
+        this._time = this._maxTime
+    }
+
+    private roundLogic() {
+        if (this._roundStarted == 0) {
+            this._delayBeforeStart -= 1
+            if (this._delayBeforeStart > 0) {
+                SetTextTagText(this._fTeamInfoTag, `Round ${this._currentRound + 1} start in ${this._delayBeforeStart}`, TextTagSize2Height(25))
+                SetTextTagText(this._sTeamInfoTag, `Round ${this._currentRound + 1} start in ${this._delayBeforeStart}`, TextTagSize2Height(25))
+                return
+            } else {
+                this._roundStarted = 1
+                this._time += 1
+            }
+        }
+
+        this._time -= 1
+        if (this._time == 0) {
+            this.createUnits(1)
+            this.createUnits(2)
+
+            if (this._spawnIndex + 1 >= this._maxSpawnIndex) {
+                this.nextRound()
+                print('HERE')
+                SetTextTagText(this._fTeamInfoTag, `Round ${this._currentRound + 1} start in ${this._delayBeforeStart}`, TextTagSize2Height(25))
+                SetTextTagText(this._sTeamInfoTag, `Round ${this._currentRound + 1} start in ${this._delayBeforeStart}`, TextTagSize2Height(25))
+                return
+            } else {
+                this.nextSpawn()
+            }
+
+
+            this._time = this._maxTime
+        }
+
+        SetTextTagText(this._fTeamInfoTag, `Spawn ${this._spawnIndex + 1}/${this._maxSpawnIndex} in ${this._time}`, TextTagSize2Height(25))
+        SetTextTagText(this._sTeamInfoTag, `Spawn ${this._spawnIndex + 1}/${this._maxSpawnIndex} in ${this._time}`, TextTagSize2Height(25))
     }
 
     private createUnits(team: number) {
@@ -110,15 +184,5 @@ export class SpawnSystem {
             //controlGroup.orderCoords("Attack", xxToAttack, yyToAttack)
             controlGroup.clear()
         }, print)
-    }
-
-    private spawn() {
-        this._time -= 1
-        if (this._time == 0) {
-            this.createUnits(1)
-            this.createUnits(2)
-
-            this._time = this._maxTime
-        }
     }
 }
