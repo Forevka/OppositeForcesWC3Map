@@ -17,10 +17,22 @@ export type RoundConfig = {
 
 export const SpawnConfig = new Map<number, RoundConfig>()
 SpawnConfig.set(0, {
-    Delay: 15,
+    Delay: 5,
     Spawns: [
         {
             Cooldown: 10
+        },
+        {
+            Cooldown: 15
+        },
+        {
+            Cooldown: 15
+        },
+        {
+            Cooldown: 15
+        },
+        {
+            Cooldown: 15
         },
         {
             Cooldown: 15
@@ -54,3 +66,4 @@ SpawnConfig.set(2, {
     ],
     Objective: 1,
 })
+

@@ -39,11 +39,9 @@ export class SpawnSystem {
     }
 
     private nextRound() {
-        print('next round')
         this._currentRound += 1
 
         let roundInfo = SpawnConfig.get(this._currentRound)
-        print(`round ${this._currentRound}`)
 
         /*Count of spawns*/
         this._spawnIndex = -1
@@ -58,7 +56,6 @@ export class SpawnSystem {
     }
 
     private nextSpawn() {
-        print('new spawn')
         this._spawnIndex += 1
         let roundInfo = SpawnConfig.get(this._currentRound)
         /*Time between spawns*/
@@ -86,7 +83,6 @@ export class SpawnSystem {
 
             if (this._spawnIndex + 1 >= this._maxSpawnIndex) {
                 this.nextRound()
-                print('HERE')
                 SetTextTagText(this._fTeamInfoTag, `Round ${this._currentRound + 1} start in ${this._delayBeforeStart}`, TextTagSize2Height(25))
                 SetTextTagText(this._sTeamInfoTag, `Round ${this._currentRound + 1} start in ${this._delayBeforeStart}`, TextTagSize2Height(25))
                 return
@@ -117,7 +113,7 @@ export class SpawnSystem {
             let controlPlayer = 0
             let facing = 0
 
-            let controlGroup: Group;
+            //let controlGroup: Group;
 
             if (team == 1) {
                 xxSpawn = Coords.FTeamSpawn.x
@@ -133,7 +129,7 @@ export class SpawnSystem {
                 controlPlayer = 4
                 facing = 180
 
-                controlGroup = this._fTeamUnitGroup
+                //controlGroup = this._fTeamUnitGroup
             } else {
                 xxSpawn = Coords.STeamSpawn.x
                 yySpawn = Coords.STeamSpawn.y
@@ -148,7 +144,7 @@ export class SpawnSystem {
                 controlPlayer = 5
                 facing = 0
 
-                controlGroup = this._sTeamUnitGroup
+                //controlGroup = this._sTeamUnitGroup
             }
             //const battleIndexer = BattleIndexer.Instance
             const loc = Location(xxSpawn, yySpawn);
@@ -182,7 +178,7 @@ export class SpawnSystem {
             //print(`control group ${team} len ${controlGroup.size}`)
             //controlGroup.orderImmediate("Stop")
             //controlGroup.orderCoords("Attack", xxToAttack, yyToAttack)
-            controlGroup.clear()
+            //controlGroup.clear()
         }, print)
     }
 }

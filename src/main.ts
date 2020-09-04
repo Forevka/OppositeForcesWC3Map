@@ -1,7 +1,7 @@
 import { Timer, Unit, Trigger, Camera, Quest, MapPlayer } from "w3ts";
 import { Players } from "w3ts/globals";
 import { addScriptHook, W3TS_HOOK } from "w3ts/hooks";
-import { Units, Coords, Icons, CURRENT_VERSION, UnitsByTier } from "Config";
+import { Coords, Icons, CURRENT_VERSION, UnitsByTier } from "Config";
 import { State } from "State";
 import { PlayerForce } from "Utils";
 import { IncomeView } from "View/IncomeView";
@@ -10,12 +10,10 @@ import { Commands } from "System/Commands";
 import { UnitItemsView } from "View/UnitItemsView";
 import { SpawnSystem } from "System/SpawnSystem";
 import { UpgradesLogic } from "System/Upgrades";
-import { DisplayDamage } from "System/DisplayDamage";
-import { speedUpAOESpell } from "Spells/AOE/SpeedUp";
-import { BattleIndexer } from "Indexer/BattleIndexer";
 import { IncomeOnKill } from "System/IncomeOnKill";
 import { ChooseRace } from "System/ChooseRace";
 import { MovingUnitTakesBiggerDamage } from "System/MovingUnitTakeBiggerDamage";
+import { registerSpells } from "Spells/Configure";
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -108,7 +106,7 @@ function tsMain() {
   //DisplayDamage.Init()  
 
   ///DECLARE ALL SPELLS
-  speedUpAOESpell()
+  registerSpells()
   /* */
 
   new Timer().start(0.0, false, () => {

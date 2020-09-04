@@ -931,3 +931,27 @@ STRING 215
 Source applied an enhanced effect with this damage.
 }
 
+STRING 216
+// Abilities: A008 (CustomBlizzard), Ubertip (Tooltip - Normal - Extended)
+{
+Gives 150 damage to units in range and make them slow attack and move speed by 15% for 10 sec
+}
+
+STRING 217
+// Abilities: A009 (SpeedUp), Name (Name)
+{
+SpeedUp
+}
+
+STRING 218
+// Abilities: A00B (BlizzardSlow), Name (Name)
+{
+BlizzardSlow
+}
+
+STRING 219
+// Buffs/Effects: B002 (), Bufftip (Tooltip)
+{
+Blizzard Slow
+}
+
