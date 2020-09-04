@@ -1,6 +1,16 @@
+import { Abilities } from "Config/Abilities";
+
 const MAIN_UPGRADE = 1378889776
 function UpgradeOffset(offset: number) {
     return MAIN_UPGRADE + offset;
+}
+
+export const RaceEnum = {
+    StartRace: 1000,
+    Orc: 0,
+    Human: 1,
+    Undead: 2,
+    NightElf: 3,
 }
 
 export const Upgrades = {
@@ -69,7 +79,7 @@ startRace.set(0, [
     Units.Rogue,
     Units.SpearTrower,
 ])
-UnitsByTier.set(1000, startRace)
+UnitsByTier.set(RaceEnum.StartRace, startRace)
 
 let orcRace = new Map<number, number[]>()
 orcRace.set(0, [
@@ -84,7 +94,7 @@ orcRace.set(1, [
 orcRace.set(2, [
     Units.Orc.Kodo
 ])
-UnitsByTier.set(0, orcRace)
+UnitsByTier.set(RaceEnum.Orc, orcRace)
 
 let humRace = new Map<number, number[]>()
 humRace.set(0, [
@@ -99,7 +109,7 @@ humRace.set(1, [
 humRace.set(2, [
     Units.Human.Knight,
 ])
-UnitsByTier.set(1, humRace)
+UnitsByTier.set(RaceEnum.Human, humRace)
 
 
 let udRace = new Map<number, number[]>()
@@ -114,7 +124,7 @@ udRace.set(1, [
 udRace.set(2, [
     Units.Undead.Abomination,
 ])
-UnitsByTier.set(2, udRace)
+UnitsByTier.set(RaceEnum.Undead, udRace)
 
 let neRace = new Map<number, number[]>()
 neRace.set(0, [
@@ -130,34 +140,65 @@ neRace.set(2, [
     Units.NightElf.DruidBearInForm,
     Units.NightElf.MoutainGiant,
 ])
-UnitsByTier.set(3, neRace)
+UnitsByTier.set(RaceEnum.NightElf, neRace)
 
+export const SpellsByTier = new Map<number, Map<number, number[]>>()
+let humSpells = new Map<number, number[]>()
+humSpells.set(0, [
+    Abilities.UnitRegeneration,
+])
+humSpells.set(1, [
+    Abilities.BlizzardWithSlow,
+])
+humSpells.set(2, [
+    
+])
+
+SpellsByTier.set(RaceEnum.Human, humSpells)
+
+let orcSpells = new Map<number, number[]>()
+orcSpells.set(0, [
+    Abilities.BetterBloodlust,
+])
+orcSpells.set(1, [
+    Abilities.HealingWave,
+])
+orcSpells.set(2, [
+    
+])
+
+SpellsByTier.set(RaceEnum.Orc, orcSpells)
 
 export const RaceMap = {
     START: {
         Id: 1000,
         Name: 'Default race',
         TierUpgrades: new Map<number, number>(),
+        AbilityCasterSkin: 0,
     },
     ORC: {
         Id: 0,
         Name: 'Orc race',
         TierUpgrades: new Map<number, number>(),
+        AbilityCasterSkin: FourCC('ovln')
     },
     HUM: {
         Id: 1,
         Name: 'Human race',
         TierUpgrades: new Map<number, number>(),
+        AbilityCasterSkin: FourCC('hvlt')
     },
     UD: {
         Id: 2,
         Name: 'Undead race',
         TierUpgrades: new Map<number, number>(),
+        AbilityCasterSkin: 1
     },
     NE: {
         Id: 3,
         Name: 'NightElf',
         TierUpgrades: new Map<number, number>(),
+        AbilityCasterSkin: 1
     },
 }
 

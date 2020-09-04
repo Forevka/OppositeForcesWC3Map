@@ -14,6 +14,8 @@ import { IncomeOnKill } from "System/IncomeOnKill";
 import { ChooseRace } from "System/ChooseRace";
 import { MovingUnitTakesBiggerDamage } from "System/MovingUnitTakeBiggerDamage";
 import { registerSpells } from "Spells/Configure";
+import { RedAbilityCasterBuilding } from "Config/PlayerAbilityCasterBuilding";
+
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
 const TS_VERSION = compiletime(() => require("typescript").version);
@@ -108,7 +110,6 @@ function tsMain() {
   ///DECLARE ALL SPELLS
   registerSpells()
   /* */
-
   new Timer().start(0.0, false, () => {
     unitItemsView.init()
 

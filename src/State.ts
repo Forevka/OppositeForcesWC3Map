@@ -5,6 +5,7 @@ export interface UserState {
         Id: number,
         Name: string,
         TierUpgrades: Map<number, number>,
+        AbilityCasterSkin: number,
     },
     Tier: number,
     Income: {

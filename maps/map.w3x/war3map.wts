@@ -955,3 +955,33 @@ STRING 219
 Blizzard Slow
 }
 
+STRING 220
+// Abilities: A00C (Жажда крови), Ubertip (Tooltip - Normal - Extended)
+{
+Gives unit +50% attack speed for 10 sec
+}
+
+STRING 221
+// Units: h009 (PlayerAbilityCasterBuilding), Name (Name)
+{
+PlayerAbilityCasterBuilding
+}
+
+STRING 222
+// Abilities: A00D (Choose race), Name (Name)
+{
+Choose race
+}
+
+STRING 223
+// Abilities: A00D (Choose race), Tip (Tooltip - Normal)
+{
+Choose your race in embassy
+}
+
+STRING 224
+// Abilities: A00D (Choose race), Ubertip (Tooltip - Normal - Extended)
+{
+After choosing race you will grant to cast race-specific abilities and buy units
+}
+

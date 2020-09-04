@@ -124,6 +124,11 @@ udg_IsUnitPreplaced = __jarray(false)
 udg_CONVERTED_ATTACK_TYPE = {}
 udg_CONVERTED_DAMAGE_TYPE = {}
 udg_TempGroup = nil
+udg_Untitled_Variable_001 = nil
+udg_RedPlayer_AbilityCaster = nil
+udg_BluePlayer_AbilityCaster = nil
+udg_TealPlayer_AbilityCaster = nil
+udg_PurplePlayer_AbilityCaster = nil
 gg_trg_Damage_Engine_Config = nil
 gg_trg_StartResources = nil
 gg_trg_Melee_Initialization = nil
@@ -146,6 +151,11 @@ gg_trg_Untitled_Trigger_003 = nil
 gg_trg_Untitled_Trigger_003_Copy = nil
 gg_trg_Untitled_Trigger_002 = nil
 gg_trg_TestTrig = nil
+gg_trg_SetPlayersAbilityCaster = nil
+gg_unit_h009_0156 = nil
+gg_unit_h009_0157 = nil
+gg_unit_h009_0155 = nil
+gg_unit_h009_0158 = nil
 function InitGlobals()
     local i = 0
     i = 0
@@ -1896,7 +1906,7 @@ function CreateBuildingsForPlayer0()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1920.0, 2560.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3008.0, 1920.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 2176.0, 1344.0, 270.000, FourCC("n002"))
-    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3584.0, 1152.0, 270.000, FourCC("n002"))
+    u = BlzCreateUnitWithSkin(p, FourCC("n002"), 3264.0, 832.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 4224.0, 1088.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5376.0, 1024.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 5312.0, 1728.0, 270.000, FourCC("n002"))
@@ -1912,6 +1922,7 @@ function CreateBuildingsForPlayer0()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 1024.0, 2624.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7232.0, 3712.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, 1152.0, 270.000, FourCC("n002"))
+    gg_unit_h009_0156 = BlzCreateUnitWithSkin(p, FourCC("h009"), 3840.0, 3264.0, 270.000, FourCC("h009"))
 end
 
 function CreateUnitsForPlayer0()
@@ -1978,6 +1989,7 @@ function CreateBuildingsForPlayer1()
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, -1088.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("n002"), 7168.0, -2880.0, 270.000, FourCC("n002"))
     u = BlzCreateUnitWithSkin(p, FourCC("h004"), 4928.0, -2560.0, 270.000, FourCC("h004"))
+    gg_unit_h009_0158 = BlzCreateUnitWithSkin(p, FourCC("h009"), 3904.0, -3136.0, 270.000, FourCC("h009"))
 end
 
 function CreateUnitsForPlayer1()
@@ -2003,6 +2015,7 @@ function CreateBuildingsForPlayer2()
     u = BlzCreateUnitWithSkin(p, FourCC("h000"), 5888.0, 1536.0, 270.000, FourCC("h000"))
     u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5376.0, 768.0, 270.000, FourCC("h002"))
     u = BlzCreateUnitWithSkin(p, FourCC("h004"), 5440.0, 1984.0, 270.000, FourCC("h004"))
+    gg_unit_h009_0155 = BlzCreateUnitWithSkin(p, FourCC("h009"), 3840.0, 1280.0, 270.000, FourCC("h009"))
 end
 
 function CreateBuildingsForPlayer3()
@@ -2015,6 +2028,7 @@ function CreateBuildingsForPlayer3()
     u = BlzCreateUnitWithSkin(p, FourCC("h000"), 6272.0, -768.0, 270.000, FourCC("h000"))
     u = BlzCreateUnitWithSkin(p, FourCC("h002"), 5376.0, -768.0, 270.000, FourCC("h002"))
     u = BlzCreateUnitWithSkin(p, FourCC("h004"), 5376.0, -1728.0, 270.000, FourCC("h004"))
+    gg_unit_h009_0157 = BlzCreateUnitWithSkin(p, FourCC("h009"), 3712.0, -896.0, 270.000, FourCC("h009"))
 end
 
 function CreateBuildingsForPlayer6()
@@ -2180,6 +2194,18 @@ end
 function InitTrig_Damage_Engine_Config()
     gg_trg_Damage_Engine_Config = CreateTrigger()
     TriggerAddAction(gg_trg_Damage_Engine_Config, Trig_Damage_Engine_Config_Actions)
+end
+
+function Trig_SetPlayersAbilityCaster_Actions()
+    udg_BluePlayer_AbilityCaster = gg_unit_h009_0158
+    udg_TealPlayer_AbilityCaster = gg_unit_h009_0155
+    udg_PurplePlayer_AbilityCaster = gg_unit_h009_0157
+    udg_RedPlayer_AbilityCaster = gg_unit_h009_0156
+end
+
+function InitTrig_SetPlayersAbilityCaster()
+    gg_trg_SetPlayersAbilityCaster = CreateTrigger()
+    TriggerAddAction(gg_trg_SetPlayersAbilityCaster, Trig_SetPlayersAbilityCaster_Actions)
 end
 
 function Trig_StartResources_Func001A()
@@ -2566,6 +2592,7 @@ end
 
 function InitCustomTriggers()
     InitTrig_Damage_Engine_Config()
+    InitTrig_SetPlayersAbilityCaster()
     InitTrig_StartResources()
     InitTrig_Melee_Initialization()
     InitTrig_DamageOnMovingUnit()
@@ -2584,6 +2611,7 @@ end
 
 function RunInitializationTriggers()
     ConditionalTriggerExecute(gg_trg_Damage_Engine_Config)
+    ConditionalTriggerExecute(gg_trg_SetPlayersAbilityCaster)
     ConditionalTriggerExecute(gg_trg_StartResources)
     ConditionalTriggerExecute(gg_trg_Melee_Initialization)
 end

@@ -1,8 +1,9 @@
-import { Trigger, MapPlayer} from "w3ts/index"
-import { Upgrades, UpgradesIncomeEffectsByLvl, UnitsByTier } from "Config"
+import { Trigger, MapPlayer, Unit} from "w3ts/index"
+import { Upgrades, UpgradesIncomeEffectsByLvl, UnitsByTier, SpellsByTier } from "Config"
 import { UserState, State } from "State"
 import { Color } from "Utils"
 import { UnitItemsView } from "View/UnitItemsView"
+import {GetAbilityCasterForPlayer} from "Config/PlayerAbilityCasterBuilding"
 
 export class UpgradesLogic {
     private _callbackMap: Map<number, () => void>
@@ -49,6 +50,12 @@ export class UpgradesLogic {
         UnitsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
             this._unitItemsView.addUnit(GetPlayerId(player), x)
         })
+
+        let abilityCaster = Unit.fromHandle(GetAbilityCasterForPlayer(GetPlayerId(player)))
+        SpellsByTier.get(state.Race.Id).get(state.Tier).forEach((x) => {
+            abilityCaster.addAbility(x)
+        })
+
         this._unitItemsView.refresh(GetPlayerId(player))
 
         DisplayTextToPlayer(Player(GetPlayerId(player)), 0, 0, `You upgraded your main contract to ${upgradedToTier} tier.\nNow you able to train new units`)
