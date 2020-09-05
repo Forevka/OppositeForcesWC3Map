@@ -1,6 +1,8 @@
 declare var udg_DamageEventSource: unit;
 declare var udg_DamageEventTarget: unit;
 
+declare var udg_DamageEventAmount: number;
+
 /* 
     Modifiers
 */
@@ -16,9 +18,6 @@ declare var udg_DEFENSE_TYPE_HERO: number;
 declare var udg_DEFENSE_TYPE_DIVINE: number;
 declare var udg_DEFENSE_TYPE_UNARMORED: number;
 
-
-
-declare var udg_DamageEventAmount: number;
 
 declare var udg_UnitMoving: boolean[]
 declare var udg_UnitMovingInList: boolean[]

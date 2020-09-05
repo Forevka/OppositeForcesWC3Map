@@ -8,4 +8,5 @@ export const Abilities = {
     // orcs
     HealingWave: FourCC('A000'),
     BetterBloodlust: FourCC('A00C'),
+    BloodSwing: FourCC('A00F'), // grunt has this ability
 }

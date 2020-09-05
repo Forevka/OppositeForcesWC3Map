@@ -1051,3 +1051,45 @@ STRING 235
 Speed up
 }
 
+STRING 236
+// Units: h008 (CustomRifleman), Ubertip (Tooltip - Extended)
+{
+Has chance 20% to critical hit x2|n|n|cffffcc00Атакует наземные и воздушные цели.|r
+}
+
+STRING 237
+// Units: o001 (Рубака), Ubertip (Tooltip - Extended)
+{
+Has chance 25% to recover health as many as damaged
+}
+
+STRING 238
+// Units: n005 (Ученик волшебника), Ubertip (Tooltip - Extended)
+{
+Has hex ability|n|n|cffffcc00Атакует наземные и воздушные цели.|r
+}
+
+STRING 239
+// Units: n006 (CustomArcher), Ubertip (Tooltip - Extended)
+{
+Has multishot for 3 units |n|n|cffffcc00Атакует наземные и воздушные цели.|r
+}
+
+STRING 240
+// Abilities: A00F (Blood swing), Name (Name)
+{
+Blood swing
+}
+
+STRING 243
+// Abilities: A00F (Blood swing), Tip (Tooltip - Normal)
+{
+Gives chance 50% to recover hp as many as damaged
+}
+
+STRING 244
+// Abilities: A00F (Blood swing), Ubertip (Tooltip - Normal - Extended)
+{
+Gives chance 50% to recover hp as many as damaged
+}
+

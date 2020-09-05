@@ -4,4 +4,5 @@ export const AbilityModel = {
     DarkRitualTarget: "Abilities\\Spells\\Undead\\DarkRitual\\DarkRitualTarget.mdl",
     MarkOfChaos: "Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",
     AlilTarget: "Abilities\\Spells\\Items\\AIil\\AIilTarget.mdl", //idk
+    VampiricHealHp: "Abilities\\Spells\\Undead\\VampiricAura\\VampiricAuraTarget.mdl",
 }

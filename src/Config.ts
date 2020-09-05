@@ -42,16 +42,18 @@ export const Units = {
     SpearTrower: FourCC('nbrg'),
 
     Human: {
-        Footman: FourCC('hfoo'),
+        Footman: FourCC('h007'),
+        Rifleman: FourCC('h008'),
+        Mage1: FourCC('n005'),
+        Archer: FourCC('n006'),
         Knight: FourCC('hkni'),
-        Rifleman: FourCC('hrif'),
         Priest: FourCC('hmpr'),
         Sorcer: FourCC('hsor'),
         AntiMage: FourCC('hspt'),
     },
 
     Orc: {
-        Grunt: FourCC('ogru'),
+        Grunt: FourCC('o001'),
         Raider: FourCC('orai'),
         Hunter: FourCC('ohun'),
         Kodo: FourCC('okod'),
@@ -105,6 +107,8 @@ let humRace = new Map<number, number[]>()
 humRace.set(0, [
     Units.Human.Footman,
     Units.Human.Rifleman,
+    Units.Human.Archer,
+    Units.Human.Mage1,
 ])
 humRace.set(1, [
     Units.Human.AntiMage,
