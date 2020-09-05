@@ -15,6 +15,7 @@ import { ChooseRace } from "System/ChooseRace";
 import { MovingUnitTakesBiggerDamage } from "System/MovingUnitTakeBiggerDamage";
 import { registerSpells } from "Spells/Configure";
 import { RedAbilityCasterBuilding } from "Config/PlayerAbilityCasterBuilding";
+import { SellUnitSystem } from "System/SellUnitSystem";
 
 
 const BUILD_DATE = compiletime(() => new Date().toUTCString());
@@ -45,7 +46,8 @@ function tsMain() {
   //
   
   //let state = State.FTeam
-
+  
+  let sellUnitSystem = new SellUnitSystem()
 
   let fTeamTextTag = CreateTextTagLocBJ('Spawn info', Location(Coords.FTeamSpawn.x, Coords.FTeamSpawn.y), 100, 25, 255,255,255,1)
   let sTeamTextTag = CreateTextTagLocBJ('Spawn info', Location(Coords.STeamSpawn.x, Coords.STeamSpawn.y), 100, 25, 255,255,255,1)

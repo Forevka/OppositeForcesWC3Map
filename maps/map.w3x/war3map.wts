@@ -985,3 +985,69 @@ STRING 224
 After choosing race you will grant to cast race-specific abilities and buy units
 }
 
+STRING 225
+// Abilities: A00E (Sell unit), Name (Name)
+{
+Sell unit
+}
+
+STRING 226
+// Upgrades: R003 (Рассеяние чар), Tip (Tooltip)
+{
+Sell this unit for 80%
+}
+
+STRING 227
+// Upgrades: R003 (Рассеяние чар), Ubertip (Tooltip - Extended)
+{
+returns 80% gold and wood spent for this unit
+}
+
+STRING 228
+// Abilities: A00E (Sell unit), Hotkey (Hotkey - Normal)
+{
+S
+}
+
+STRING 229
+// Abilities: A00E (Sell unit), Tip (Tooltip - Normal)
+{
+Sell unit
+}
+
+STRING 230
+// Abilities: A00E (Sell unit), Ubertip (Tooltip - Normal - Extended)
+{
+Selling this unit and returning 80% resources that was spent to buying
+}
+
+STRING 231
+// Upgrades: R003 (Рассеяние чар), Name (Name)
+{
+Sell unit
+}
+
+STRING 232
+// Upgrades: R003 (Рассеяние чар), Hotkey (Hotkey)
+{
+S
+}
+
+STRING 233
+// Buffs/Effects: B004 (Speed Up), EditorName (Name (Editor Only))
+{
+Speed Up
+}
+
+STRING 234
+// Buffs/Effects: B004 (Speed Up), Bufftip (Tooltip)
+{
+Speed up
+}
+
+STRING 235
+// Buffs/Effects: B004 (Speed Up), Buffubertip (Tooltip - Extended)
+{
+Speed up
+}
+

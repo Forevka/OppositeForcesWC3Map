@@ -1,5 +1,5 @@
 import { Trigger, Group, MapPlayer, Timer, Unit } from "w3ts/index"
-import { Buildings, RaceMap, UnitsByTier, SpellsByTier } from "Config"
+import { Buildings, RaceMap, UnitsByTier, SpellsByTier, RaceEnum, TierBuildings } from "Config"
 import { State } from "State"
 import { UnitItemsView } from "View/UnitItemsView"
 import { Abilities } from "Config/Abilities"
@@ -28,35 +28,40 @@ export class ChooseRace {
         let trg2 = new Trigger()
         trg2.registerAnyUnitEvent(EVENT_PLAYER_UNIT_UPGRADE_FINISH)
         trg2.addAction(() => {
+            let unit = Unit.fromEvent()
             let player = MapPlayer.fromEvent()
-            let isOrc = PlayerHaveUnit(player, Buildings.OrcEmbassy)
-            let isHuman = PlayerHaveUnit(player, Buildings.HumanEmbassy)
-            let race = RaceMap.START
-            if (isOrc) {
-                race = RaceMap.ORC
-            } else if (isHuman) {
-                race = RaceMap.HUM
+            if (TierBuildings.findIndex((x) => {
+                return unit.typeId == x
+            }) > -1) {
+                let isOrc = PlayerHaveUnit(player, Buildings.OrcEmbassy)
+                let isHuman = PlayerHaveUnit(player, Buildings.HumanEmbassy)
+                let race = RaceMap.START
+                if (isOrc) {
+                    race = RaceMap.ORC
+                } else if (isHuman) {
+                    race = RaceMap.HUM
+                }
+    
+                let playerState = State[player.id]
+                playerState.Race = race
+    
+                /*print(`race ${playerState.Race.id} ${playerState.Race.name} tier ${playerState.Tier}`)
+                print(UnitsByTier.get(1).get(0))
+                print(UnitsByTier.get(1).get(0).length)
+                print(UnitsByTier.get(playerState.Race.id).get(playerState.Tier))
+                print(UnitsByTier.get(playerState.Race.id).get(playerState.Tier).length)*/
+                UnitsByTier.get(playerState.Race.Id).get(playerState.Tier).forEach((x) => {
+                    unitItemsView.addUnit(player.id, x)
+                })
+                unitItemsView.refresh(player.id)
+    
+                DisplayTextToPlayer(Player(player.id), 0, 0, `You signed contract with ${playerState.Race.Name}!\nNow you granted ability to train units of this race in right panel menu.`)
             }
-
-            let playerState = State[player.id]
-            playerState.Race = race
-
-            /*print(`race ${playerState.Race.id} ${playerState.Race.name} tier ${playerState.Tier}`)
-            print(UnitsByTier.get(1).get(0))
-            print(UnitsByTier.get(1).get(0).length)
-            print(UnitsByTier.get(playerState.Race.id).get(playerState.Tier))
-            print(UnitsByTier.get(playerState.Race.id).get(playerState.Tier).length)*/
-            UnitsByTier.get(playerState.Race.Id).get(playerState.Tier).forEach((x) => {
-                unitItemsView.addUnit(player.id, x)
-            })
-            unitItemsView.refresh(player.id)
-
-            DisplayTextToPlayer(Player(player.id), 0, 0, `You signed contract with ${playerState.Race.Name}!\nNow you granted ability to train units of this race in right panel menu.`)
         })
     }
 
     private abilityCasterSet(abilityCasterBuilding: Unit) {
-        if (State[abilityCasterBuilding.owner.id].Race.Id == 1000) {
+        if (State[abilityCasterBuilding.owner.id].Race.Id == RaceEnum.StartRace) {
             abilityCasterBuilding.setAnimation('birth')
         } else {
             abilityCasterBuilding.setAnimation('stand')

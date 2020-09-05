@@ -1,0 +1,1 @@
+declare function ArcingTextTag(text: string, targetUnit: unit);

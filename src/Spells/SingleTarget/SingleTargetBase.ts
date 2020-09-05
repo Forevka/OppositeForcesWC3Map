@@ -1,14 +1,14 @@
 import { Trigger, Group, Unit, MapPlayer, Widget, Timer } from "w3ts/index";
 import { Units } from "Config";
-import { AOESpellInfo } from "Spells/SpellInfo";
+import { STSpellInfo } from "Spells/SpellInfo";
 import { MyGroup } from "Extensions/MyGroup";
 
-export class SpellAOEBase {
-    private _info: AOESpellInfo;
+export class SingleTargetBase {
+    private _info: STSpellInfo;
     private _trigger: Trigger;
-    private _castAction: (this: SpellAOEBase, dummyCaster: Unit, dummyOwner: MapPlayer, units: MyGroup, spellInfo: AOESpellInfo) => void;
+    private _castAction: (this: SingleTargetBase, dummyCaster: Unit, dummyOwner: MapPlayer, unit: Unit, spellInfo: STSpellInfo) => void;
 
-    public constructor(info: AOESpellInfo) {
+    public constructor(info: STSpellInfo) {
         this._info = info
         this._trigger = new Trigger()
     }
@@ -17,18 +17,18 @@ export class SpellAOEBase {
         this._trigger.registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
         this._trigger.addAction(() => {
             let spellId = GetSpellAbilityId()
-            let spellLocation =  GetSpellTargetLoc()
+            let spellTarget = Unit.fromEvent()
             let dummyOwner = MapPlayer.fromEvent()
-            let dummyCaster = new Unit(dummyOwner, Units.Dummy, GetLocationX(spellLocation), GetLocationY(spellLocation), 0)
-            dummyCaster.x = GetLocationX(spellLocation)
-            dummyCaster.y = GetLocationY(spellLocation)
+            let dummyCaster = new Unit(dummyOwner, Units.Dummy, spellTarget.x, spellTarget.y, 0)
+            dummyCaster.x = spellTarget.x
+            dummyCaster.y = spellTarget.y
 
             if (spellId == this._info.TriggerSpellId) {
                 dummyCaster.addAbility(this._info.DummySpellId)
                 dummyCaster.setAbilityLevel(this._info.DummySpellId, 1);
-                this._castAction(dummyCaster, dummyOwner, MyGroup.fromHandle(GetUnitsInRangeOfLocAll(this._info.Range, spellLocation)), this._info)
+                this._castAction(dummyCaster, dummyOwner, spellTarget, this._info)
             }
-            
+
             let garbageDestroyer = new Timer().start(10, false, () => {
                 dummyCaster.destroy()
                 garbageDestroyer.destroy()
@@ -38,7 +38,7 @@ export class SpellAOEBase {
         return this;
     }
 
-    public SetAction(castAction: (this: SpellAOEBase, dummyCaster: Unit, dummyOwner: MapPlayer, units: MyGroup, spellInfo: AOESpellInfo) => void) {
+    public SetAction(castAction: (this: SingleTargetBase, dummyCaster: Unit, dummyOwner: MapPlayer, unit: Unit, spellInfo: STSpellInfo) => void) {
         this._castAction = castAction;
     }
 }

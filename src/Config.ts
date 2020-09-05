@@ -21,12 +21,17 @@ export const Upgrades = {
     OrcT3: FourCC('R008'),
     HumT2: FourCC('R004'),
     HumT3: FourCC('R005'),
+    SellUnit: FourCC('R003'),
 }
 
 export const Buildings = {
     OrcEmbassy: FourCC('h006'),
     HumanEmbassy: FourCC('h005'),
 }
+
+export const TierBuildings = [
+    Buildings.OrcEmbassy, Buildings.HumanEmbassy,
+]
 
 export const Units = {
     Dummy: FourCC('h003'), // DUMMY UNIT FOR ABILITY have invis and locust
