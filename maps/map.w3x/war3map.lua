@@ -129,6 +129,7 @@ udg_RedPlayer_AbilityCaster = nil
 udg_BluePlayer_AbilityCaster = nil
 udg_TealPlayer_AbilityCaster = nil
 udg_PurplePlayer_AbilityCaster = nil
+gg_trg_StartEffectOfAnAbility = nil
 gg_trg_Damage_Engine_Config = nil
 gg_trg_SetPlayersAbilityCaster = nil
 gg_trg_StartResources = nil
@@ -154,8 +155,8 @@ gg_trg_Untitled_Trigger_002 = nil
 gg_trg_TestTrig = nil
 gg_unit_h009_0155 = nil
 gg_unit_h009_0156 = nil
-gg_unit_h009_0157 = nil
 gg_unit_h009_0158 = nil
+gg_unit_h009_0157 = nil
 function InitGlobals()
     local i = 0
     i = 0
@@ -1931,7 +1932,8 @@ function CreateUnitsForPlayer0()
     local unitID
     local t
     local life
-    u = BlzCreateUnitWithSkin(p, FourCC("o001"), 1523.4, 2245.6, 149.803, FourCC("o001"))
+    u = BlzCreateUnitWithSkin(p, FourCC("o001"), 1508.9, 2075.2, 15.320, FourCC("o001"))
+    u = BlzCreateUnitWithSkin(p, FourCC("o002"), 1501.7, 2440.3, 298.815, FourCC("o002"))
 end
 
 function CreateBuildingsForPlayer1()
@@ -1994,7 +1996,8 @@ function CreateUnitsForPlayer1()
     local unitID
     local t
     local life
-    u = BlzCreateUnitWithSkin(p, FourCC("o001"), 1391.2, -2263.4, 144.210, FourCC("o001"))
+    u = BlzCreateUnitWithSkin(p, FourCC("o001"), 1385.9, -2175.6, 353.111, FourCC("o001"))
+    u = BlzCreateUnitWithSkin(p, FourCC("o003"), 1401.5, -2440.0, 307.495, FourCC("o003"))
 end
 
 function CreateBuildingsForPlayer2()
@@ -2101,6 +2104,15 @@ function CreateAllUnits()
     CreateNeutralPassiveBuildings()
     CreatePlayerBuildings()
     CreatePlayerUnits()
+end
+
+function Trig_StartEffectOfAnAbility_Actions()
+end
+
+function InitTrig_StartEffectOfAnAbility()
+    gg_trg_StartEffectOfAnAbility = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_StartEffectOfAnAbility, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddAction(gg_trg_StartEffectOfAnAbility, Trig_StartEffectOfAnAbility_Actions)
 end
 
 function Trig_Damage_Engine_Config_Actions()
@@ -2583,6 +2595,7 @@ function InitTrig_Report_On_Off()
 end
 
 function InitCustomTriggers()
+    InitTrig_StartEffectOfAnAbility()
     InitTrig_Damage_Engine_Config()
     InitTrig_SetPlayersAbilityCaster()
     InitTrig_StartResources()
@@ -2821,11 +2834,11 @@ end
 
 
 globals(function(_ENV)
-    udg_UnitIndexEvent = 0.0
     udg_AfterDamageEvent = 0.0
     udg_DamageEvent = 0.0
     udg_DamageModifierEvent = 0.0
     udg_LethalDamageEvent = 0.0
     udg_AOEDamageEvent = 0.0
+    udg_UnitIndexEvent = 0.0
 end)
 

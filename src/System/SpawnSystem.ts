@@ -78,8 +78,8 @@ export class SpawnSystem {
 
         this._time -= 1
         if (this._time == 0) {
-            this.createUnits(1)
-            this.createUnits(2)
+            SpawnSystem.createUnits(1)
+            SpawnSystem.createUnits(2)
 
             if (this._spawnIndex + 1 >= this._maxSpawnIndex) {
                 this.nextRound()
@@ -98,7 +98,7 @@ export class SpawnSystem {
         SetTextTagText(this._sTeamInfoTag, `Spawn ${this._spawnIndex + 1}/${this._maxSpawnIndex} in ${this._time}`, TextTagSize2Height(25))
     }
 
-    private createUnits(team: number) {
+    public static createUnits(team: number) {
         xpcall(() => {
             let xxSpawn = 0
             let yySpawn = 0

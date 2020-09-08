@@ -1,4 +1,5 @@
 declare var gg_trg_Damage_Engine_Config: trigger;
+declare var gg_trg_SetPlayersAbilityCaster: trigger;
 declare var gg_trg_StartResources: trigger;
 declare var gg_trg_Melee_Initialization: trigger;
 declare var gg_trg_DamageOnMovingUnit: trigger;
@@ -20,8 +21,8 @@ declare var gg_trg_Untitled_Trigger_003: trigger;
 declare var gg_trg_Untitled_Trigger_003_Copy: trigger;
 declare var gg_trg_Untitled_Trigger_002: trigger;
 declare var gg_trg_TestTrig: trigger;
-declare var gg_trg_SetPlayersAbilityCaster: trigger;
-declare var gg_unit_h009_0156: unit;
-declare var gg_unit_h009_0157: unit;
 declare var gg_unit_h009_0155: unit;
+declare var gg_unit_h009_0156: unit;
 declare var gg_unit_h009_0158: unit;
+declare var gg_unit_h009_0157: unit;
+declare var gg_trg_StartEffectOfAnAbility: trigger;

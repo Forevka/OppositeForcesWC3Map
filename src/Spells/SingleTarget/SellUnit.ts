@@ -3,10 +3,12 @@ import { MapPlayer, Effect, Timer } from "w3ts/index";
 import { Color } from "Utils";
 import { TextTagVisibleToAlly } from "TextTag/TextTagWithFog";
 import { AbilityModel } from "Config/Models";
+import { Units } from "Config";
 
 //Selling this unit and returning 80% resources that was spent to buying
 export function sellUnit() {
     new SingleTargetBase({
+        DummyUnitId: Units.Dummy,
         TriggerSpellId: FourCC('A00E'),
         DummySpellId: 0,
         DummySpellOrder: '',

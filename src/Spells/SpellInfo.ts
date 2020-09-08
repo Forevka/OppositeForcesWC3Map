@@ -6,6 +6,7 @@ export declare type AOESpellInfo = {
 };
 
 export declare type STSpellInfo = { 
+    DummyUnitId: number,
     TriggerSpellId: number,
     DummySpellId: number,
     DummySpellOrder: string,

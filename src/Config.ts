@@ -35,6 +35,7 @@ export const TierBuildings = [
 
 export const Units = {
     Dummy: FourCC('h003'), // DUMMY UNIT FOR ABILITY have invis and locust
+    DummyOrcLightningCaster: FourCC('h00A'),
     SpawnBattleTag: FourCC('n000'),
     SpawnRune: FourCC('n001'),
 

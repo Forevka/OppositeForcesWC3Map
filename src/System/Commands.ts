@@ -1,5 +1,6 @@
 import { Trigger, MapPlayer } from "w3ts/index"
 import { State } from "State";
+import { SpawnSystem } from "./SpawnSystem";
 
 export class Commands {
     private _trg: Trigger;
@@ -95,5 +96,20 @@ export class Commands {
                 }
             }
         })
+
+        this.command('spawn', (text: string, args: string[]) => {
+            if (args.length == 1) {
+                let teamId = S2I(args[0])
+                if (teamId == 1 || teamId == 2) {
+                    SpawnSystem.createUnits(teamId)
+                }
+            } else {
+                SpawnSystem.createUnits(1)
+                SpawnSystem.createUnits(2)
+            }
+        })
+        this.synonym('spawn', 'спавн')
+        this.synonym('spawn', 'sp')
+        this.synonym('spawn', 'сп')
     }
 }

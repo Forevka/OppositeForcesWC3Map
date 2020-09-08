@@ -854,22 +854,10 @@ STRING 201
 DUMMY
 }
 
-STRING 202
-// Units: h007 (CustomFootman), Name (Name)
-{
-CustomFootman
-}
-
 STRING 203
 // Abilities: A001 (CustomHumanDefence), Name (Name)
 {
 CustomHumanDefence
-}
-
-STRING 204
-// Units: h008 (CustomRifleman), Name (Name)
-{
-CustomRifleman
 }
 
 STRING 205
@@ -1052,7 +1040,7 @@ Speed up
 }
 
 STRING 236
-// Units: h008 (CustomRifleman), Ubertip (Tooltip - Extended)
+// Units: h008 (Crazy Rifleman), Ubertip (Tooltip - Extended)
 {
 Has chance 20% to critical hit x2|n|n|cffffcc00Атакует наземные и воздушные цели.|r
 }
@@ -1091,5 +1079,167 @@ STRING 244
 // Abilities: A00F (Blood swing), Ubertip (Tooltip - Normal - Extended)
 {
 Gives chance 50% to recover hp as many as damaged
+}
+
+STRING 245
+// Units: o002 (Ranger), Name (Name)
+{
+Ranger
+}
+
+STRING 246
+// Units: h007 (Footman), Name (Name)
+{
+Footman
+}
+
+STRING 247
+// Units: h007 (Footman), EditorSuffix (Name - Editor Suffix)
+{
+Human-T1
+}
+
+STRING 248
+// Units: h008 (Crazy Rifleman), Name (Name)
+{
+Crazy Rifleman
+}
+
+STRING 249
+// Units: h008 (Crazy Rifleman), EditorSuffix (Name - Editor Suffix)
+{
+Human-T1
+}
+
+STRING 250
+// Units: n005 (Ученик волшебника), EditorSuffix (Name - Editor Suffix)
+{
+Human-T1
+}
+
+STRING 251
+// Units: n006 (CustomArcher), EditorSuffix (Name - Editor Suffix)
+{
+Human-T1
+}
+
+STRING 252
+// Units: o001 (Рубака), EditorSuffix (Name - Editor Suffix)
+{
+Orc-T1
+}
+
+STRING 253
+// Units: n008 (Отшельник из клана Бушующего Шторма), EditorSuffix (Name - Editor Suffix)
+{
+Orc-T1
+}
+
+STRING 254
+// Units: o002 (Ranger), EditorSuffix (Name - Editor Suffix)
+{
+Orc-T1
+}
+
+STRING 255
+// Units: o003 (Духостранник), EditorSuffix (Name - Editor Suffix)
+{
+Orc T1
+}
+
+STRING 256
+// Abilities: A00G (Цепная молния), EditorSuffix (Editor Suffix)
+{
+DUMMY
+}
+
+STRING 257
+// Abilities: A00G (Цепная молния), Ubertip (Tooltip - Normal - Extended)
+{
+Lightning deal 35 damage per unit and cast purg, bounces 4 times
+}
+
+STRING 258
+// Abilities: A00G (Цепная молния), Tip (Tooltip - Normal)
+{
+Цепная молния
+}
+
+STRING 259
+// Abilities: A00H (Цепная молния), EditorSuffix (Editor Suffix)
+{
+CASTING
+}
+
+STRING 260
+// Units: h00A (DUMMY ORC-T1-LIGHTNING CASTER), Name (Name)
+{
+DUMMY ORC-T1-LIGHTNING CASTER
+}
+
+STRING 261
+// Units: o002 (Ranger), Ubertip (Tooltip - Extended)
+{
+Has chance 25% to burn enemy, deals 5 hp/sec for 5 sec stackable |n|n|cffffcc00Атакует наземные и воздушные цели.|r
+}
+
+STRING 262
+// Abilities: A00J (Burn down), Name (Name)
+{
+Burn down
+}
+
+STRING 266
+// Abilities: A00K (Замедляющий яд), Tip (Tooltip - Normal)
+{
+Burning
+}
+
+STRING 267
+// Buffs/Effects: B005 (), Buffubertip (Tooltip - Extended)
+{
+This unit burning, periodically damage
+}
+
+STRING 268
+// Abilities: A00J (Burn down), EditorSuffix (Editor Suffix)
+{
+DUMMY
+}
+
+STRING 274
+// Abilities: A00J (Burn down), Tip (Tooltip - Normal)
+{
+Chance 25% to burn enemy and deal 10dmg/sec for 3 sec, stackable
+}
+
+STRING 275
+// Abilities: A00J (Burn down), Ubertip (Tooltip - Normal - Extended)
+{
+Chance 25% to burn enemy and deal 10dmg/sec for 3 sec, stackable
+}
+
+STRING 276
+// Units: h00B (DUMMY RANGE), Name (Name)
+{
+DUMMY RANGE
+}
+
+STRING 277
+// Units: o004 (TEST_TARGET_UNIT), Name (Name)
+{
+TEST_TARGET_UNIT
+}
+
+STRING 278
+// Abilities: A00K (Замедляющий яд), Ubertip (Tooltip - Normal - Extended)
+{
+This unit are burning and taking additional damage
+}
+
+STRING 279
+// Buffs/Effects: B005 (), Bufftip (Tooltip)
+{
+Burning
 }
 
