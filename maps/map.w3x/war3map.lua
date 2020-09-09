@@ -153,10 +153,10 @@ gg_trg_Untitled_Trigger_003 = nil
 gg_trg_Untitled_Trigger_003_Copy = nil
 gg_trg_Untitled_Trigger_002 = nil
 gg_trg_TestTrig = nil
+gg_unit_h009_0157 = nil
 gg_unit_h009_0155 = nil
 gg_unit_h009_0156 = nil
 gg_unit_h009_0158 = nil
-gg_unit_h009_0157 = nil
 function InitGlobals()
     local i = 0
     i = 0
@@ -2834,11 +2834,11 @@ end
 
 
 globals(function(_ENV)
+    udg_UnitIndexEvent = 0.0
     udg_AfterDamageEvent = 0.0
     udg_DamageEvent = 0.0
     udg_DamageModifierEvent = 0.0
     udg_LethalDamageEvent = 0.0
     udg_AOEDamageEvent = 0.0
-    udg_UnitIndexEvent = 0.0
 end)
 
