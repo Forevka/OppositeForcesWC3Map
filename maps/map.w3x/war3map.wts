@@ -1243,3 +1243,45 @@ STRING 279
 Burning
 }
 
+STRING 280
+// Abilities: A00L (Summon earth elemental), Tip (Tooltip - Normal)
+{
+Summon earth elemental, good tank but low damage and movement speed
+}
+
+STRING 281
+// Abilities: A00L (Summon earth elemental), Ubertip (Tooltip - Normal - Extended)
+{
+Summoning earth elemental
+}
+
+STRING 282
+// Units: h00C (Earth elemental), Name (Name)
+{
+Earth elemental
+}
+
+STRING 283
+// Abilities: A00L (Summon earth elemental), Name (Name)
+{
+Summon earth elemental
+}
+
+STRING 284
+// Abilities: A00M (Summon earth elemental), Name (Name)
+{
+Summon earth elemental
+}
+
+STRING 285
+// Abilities: A00M (Summon earth elemental), Tip (Tooltip - Normal)
+{
+Summon earh elemental
+}
+
+STRING 286
+// Abilities: A00M (Summon earth elemental), Ubertip (Tooltip - Normal - Extended)
+{
+Summon earth elemental
+}
+
