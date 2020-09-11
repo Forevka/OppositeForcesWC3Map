@@ -101,6 +101,7 @@ function tsMain() {
   q.setDescription('For any feedback feel free to email me\nzebestforevka@gmail.com or t.me/forevka')
   q.setTitle('Map build info')
   q.completed = true
+  q.required = false
   BUILD_INFO.forEach(x => q.addItem(x.trim()))
   
 

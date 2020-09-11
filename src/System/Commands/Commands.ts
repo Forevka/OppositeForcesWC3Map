@@ -1,21 +1,30 @@
-import { Trigger, MapPlayer } from "w3ts/index"
+import { Trigger, MapPlayer, Quest } from "w3ts/index"
 import { State } from "State";
 import { SpawnSystem } from "../SpawnSystem";
 import { Players } from "w3ts/globals/index";
+import { Icons } from "Config";
 
 export class Command {
     private owner: Commands;
 
+    public description: string;
+    public showInInfo: boolean;
     private _command: string;
     private _action: (this: Command, text: string, args: string[]) => void;
 
-    public constructor(command: string, ownerPool: Commands) {
+    public constructor(command: string, ownerPool: Commands, showInInfo: boolean) {
         this._command = command
         this.owner = ownerPool
+        this.showInInfo = showInInfo
     }
 
     public action(act: (this: Command, text: string, args: string[]) => void) {
         this._action = act
+        return this
+    }
+
+    public setDescription(descr: string) {
+        this.description = descr
         return this
     }
 
@@ -60,8 +69,8 @@ export class Commands {
         this._synonyms.set(synonym, originalCommand)
     }
 
-    public command(command: string) {
-        let com = new Command(command, this)
+    public command(command: string, showInInfo: boolean) {
+        let com = new Command(command, this, showInInfo)
         this._commands.set(command, com)
         return com;
     }
@@ -79,12 +88,27 @@ export class Commands {
             }
         }
     }
+
+    public createInfo() {
+        let q = new Quest()
+        q.setIcon(Icons.InfoBook)
+        q.setDescription('Here you can find description of every command that map have|nAll commands can be called with (!,-,.) prefixes|nExample -zoom 2000 or !zoom 2000')
+        q.setTitle('Commands')
+        q.completed = true
+        q.required = false
+
+        this._commands.forEach((com: Command, key: string) => {
+            if (com.showInInfo == true) {
+                q.addItem(`${key} -> ${com.description}`)
+            }
+        })
+    }
 }
 
 export function registerCommands() {
     let commandsPool = new Commands()
     commandsPool
-        .command('cam')
+        .command('cam', true)
         .action((text: string, args: string[]) => {
             if (GetLocalPlayer() == GetTriggerPlayer()) {
                 if (args.length === 0) {
@@ -101,9 +125,10 @@ export function registerCommands() {
             }
         })
         .synonym(['zoom', 'z', 'camera', "ящщь", "зум", "камера", "кам", "сфь"])
+        .setDescription("Camera zoom command")
     
     commandsPool
-        .command('unit')
+        .command('unit', false)
         .action((text: string, args: string[]) => {
             if (GetLocalPlayer() == GetTriggerPlayer()) {
                 if (args.length === 0) {
@@ -116,7 +141,7 @@ export function registerCommands() {
         .synonym(['u', 'юнит', 'у'])
     
     commandsPool
-        .command('state')
+        .command('state', false)
         .action((text: string, args: string[]) => {
             if (GetLocalPlayer() == GetTriggerPlayer()) {
                 if (args.length == 1) {
@@ -129,7 +154,7 @@ export function registerCommands() {
         })
 
     commandsPool
-        .command('spawn')
+        .command('spawn', false)
         .action((text: string, args: string[]) => {
             if (args.length == 1) {
                 let teamId = S2I(args[0])
@@ -142,4 +167,6 @@ export function registerCommands() {
             }
         })
         .synonym(['sp', 'сп', 'спавн'])
+    
+    commandsPool.createInfo()
 }

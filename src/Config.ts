@@ -276,7 +276,8 @@ export const Coords = {
 
 let path = 'ReplaceableTextures\\CommandButtons\\'
 export const Icons = {
-    PhoenixEgg: path + 'BTNPhoenixEgg.blp'
+    PhoenixEgg: path + 'BTNPhoenixEgg.blp',
+    InfoBook: path + 'BTNSpellBookBLS.blp',
 }
 
 export const CURRENT_VERSION = '0.0.5'
