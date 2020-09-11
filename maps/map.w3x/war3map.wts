@@ -1130,7 +1130,7 @@ Orc-T1
 }
 
 STRING 253
-// Units: n008 (Отшельник из клана Бушующего Шторма), EditorSuffix (Name - Editor Suffix)
+// Units: n008 (Warlock), EditorSuffix (Name - Editor Suffix)
 {
 Orc-T1
 }
@@ -1142,7 +1142,7 @@ Orc-T1
 }
 
 STRING 255
-// Units: o003 (Духостранник), EditorSuffix (Name - Editor Suffix)
+// Units: o003 (Mage), EditorSuffix (Name - Editor Suffix)
 {
 Orc T1
 }
@@ -1190,7 +1190,7 @@ Burn down
 }
 
 STRING 266
-// Abilities: A00K (Замедляющий яд), Tip (Tooltip - Normal)
+// Abilities: A00K (Burn down ), Tip (Tooltip - Normal)
 {
 Burning
 }
@@ -1232,7 +1232,7 @@ TEST_TARGET_UNIT
 }
 
 STRING 278
-// Abilities: A00K (Замедляющий яд), Ubertip (Tooltip - Normal - Extended)
+// Abilities: A00K (Burn down ), Ubertip (Tooltip - Normal - Extended)
 {
 This unit are burning and taking additional damage
 }
@@ -1243,18 +1243,6 @@ STRING 279
 Burning
 }
 
-STRING 280
-// Abilities: A00L (Summon earth elemental), Tip (Tooltip - Normal)
-{
-Summon earth elemental, good tank but low damage and movement speed
-}
-
-STRING 281
-// Abilities: A00L (Summon earth elemental), Ubertip (Tooltip - Normal - Extended)
-{
-Summoning earth elemental
-}
-
 STRING 282
 // Units: h00C (Earth elemental), Name (Name)
 {
@@ -1262,13 +1250,13 @@ Earth elemental
 }
 
 STRING 283
-// Abilities: A00L (Summon earth elemental), Name (Name)
+// Abilities: A00M (Summon earth elemental), Name (Name)
 {
 Summon earth elemental
 }
 
 STRING 284
-// Abilities: A00M (Summon earth elemental), Name (Name)
+// Abilities: A00M (Summon earth elemental), Ubertip (Tooltip - Normal - Extended)
 {
 Summon earth elemental
 }
@@ -1279,9 +1267,27 @@ STRING 285
 Summon earh elemental
 }
 
-STRING 286
-// Abilities: A00M (Summon earth elemental), Ubertip (Tooltip - Normal - Extended)
+STRING 287
+// Abilities: A00K (Burn down ), Name (Name)
 {
-Summon earth elemental
+Burn down 
+}
+
+STRING 288
+// Abilities: A00K (Burn down ), EditorSuffix (Editor Suffix)
+{
+CASTING
+}
+
+STRING 289
+// Units: o003 (Mage), Name (Name)
+{
+Mage
+}
+
+STRING 290
+// Units: n008 (Warlock), Name (Name)
+{
+Warlock
 }
 

@@ -6,7 +6,7 @@ import { State } from "State";
 import { PlayerForce } from "Utils";
 import { IncomeView } from "View/IncomeView";
 import { IncomeLogic } from "System/IncomeLogic";
-import { Commands } from "System/Commands";
+import { Commands, registerCommands } from "System/Commands/Commands";
 import { UnitItemsView } from "View/UnitItemsView";
 import { SpawnSystem } from "System/SpawnSystem";
 import { UpgradesLogic } from "System/Upgrades";
@@ -25,6 +25,7 @@ const TS_VERSION = compiletime(() => require("typescript").version);
 const TSTL_VERSION = compiletime(() => require("typescript-to-lua").version);
 
 function tsMain() {
+  registerCommands()
 
   /*const unit = new Unit(Players[0], FourCC("hfoo"), 0, 0, 270);
   unit.name = "TypeScript";
@@ -87,9 +88,6 @@ function tsMain() {
   MapPlayer.fromIndex(5).setAlliance(MapPlayer.fromIndex(3), ALLIANCE_SHARED_CONTROL, false) // purple
 
   ClearTextMessages()
-
-  const commands = new Commands()
-  commands.registerCommands()
 
   const BUILD_INFO = [
     `Build: ${BUILD_DATE}`,
