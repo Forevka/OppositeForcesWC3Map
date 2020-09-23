@@ -1,4 +1,4 @@
-import { Timer, Unit, Trigger, Camera, Group } from "w3ts";
+import { Timer, Unit, Trigger, Camera, Group, MapPlayer } from "w3ts";
 import { Units, Coords } from "Config";
 import { SpawnConfig } from "Config/SpawnConfig";
 
@@ -36,6 +36,8 @@ export class SpawnSystem {
         new Timer().start(1.00, true, () => {
             this.roundLogic()
         })
+
+        this.enableLogic()
     }
 
     private nextRound() {
@@ -53,6 +55,29 @@ export class SpawnSystem {
 
         /*Round not started*/
         this._roundStarted = 0
+    }
+
+    private enableLogic() {
+        let endCastLogicTeam1 = new Trigger()
+        endCastLogicTeam1.registerPlayerUnitEvent(MapPlayer.fromIndex(4), EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)
+        endCastLogicTeam1.addAction(() => {
+            let unit = Unit.fromEvent()
+            unit.issueOrderAt("attack", Coords.STeamBattleSpawn.x, Coords.STeamBattleSpawn.y)
+        })
+
+        let logicTeam1 = new Trigger()
+        logicTeam1.registerPlayerUnitEvent(MapPlayer.fromIndex(4), EVENT_PLAYER, null)
+        logicTeam1.addAction(() => {
+            let unit = Unit.fromEvent()
+            unit.issueOrderAt("attack", Coords.STeamBattleSpawn.x, Coords.STeamBattleSpawn.y)
+        })
+
+        let endCastLogicTeam2 = new Trigger()
+        endCastLogicTeam2.registerPlayerUnitEvent(MapPlayer.fromIndex(5), EVENT_PLAYER_UNIT_SPELL_ENDCAST, null)
+        endCastLogicTeam2.addAction(() => {
+            let unit = Unit.fromEvent()
+            unit.issueOrderAt("attack", Coords.FTeamBattleSpawn.x, Coords.FTeamBattleSpawn.y)
+        })
     }
 
     private nextSpawn() {
@@ -127,7 +152,7 @@ export class SpawnSystem {
                 yyToAttack = Coords.STeamBattleSpawn.y
 
                 controlPlayer = 4
-                facing = 180
+                facing = 270
 
                 //controlGroup = this._fTeamUnitGroup
             } else {

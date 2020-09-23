@@ -1,4 +1,4 @@
-import { Trigger, MapPlayer, Quest } from "w3ts/index"
+import { Trigger, MapPlayer, Quest, Unit } from "w3ts/index"
 import { State } from "State";
 import { SpawnSystem } from "../SpawnSystem";
 import { Players } from "w3ts/globals/index";
@@ -167,6 +167,7 @@ export function registerCommands() {
             }
         })
         .synonym(['sp', 'сп', 'спавн'])
+    
     
     commandsPool.createInfo()
 }
